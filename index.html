@@ -575,6 +575,15 @@ nav {
     </div>
   </div>
   <div style="margin-top:16px;" class="card">
+    <div class="card-title">Night Badges</div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap;">
+      <span>🎯 High score of the night</span>
+      <span>👍 Most popular pick of the night</span>
+      <span>🥶 Ice cold — lowest score started</span>
+    </div>
+    <div id="badge-stats"></div>
+  </div>
+  <div style="margin-top:16px;" class="card">
     <div class="card-title">Points Leaderboard</div>
     <div class="bar-chart" id="bar-chart"></div>
   </div>
@@ -667,6 +676,39 @@ function getTeamPicks(name) {
 }
 function getAllDates() { return [...new Set(picks.map(p=>p.date))].sort(); }
 function getPickForTeamDate(team,date) { return picks.find(p=>p.team===team&&p.date===date); }
+
+function getDayBadges(date) {
+  const dayPicks = picks.filter(p => p.date === date);
+  if (!dayPicks.length) return {bullseye:null, thumbsup:null, freeze:null};
+  const scores = dayPicks.map(p => parseFloat(p.score)||0);
+  const maxScore = Math.max(...scores);
+  const minScore = Math.min(...scores);
+  const playerCounts = {};
+  dayPicks.forEach(p => { if(p.player) playerCounts[p.player]=(playerCounts[p.player]||0)+1; });
+  const maxCount = Math.max(...Object.values(playerCounts));
+  return {
+    bullseye: dayPicks.find(p=>(parseFloat(p.score)||0)===maxScore)?.player || null,
+    thumbsup: Object.entries(playerCounts).find(([,v])=>v===maxCount)?.[0] || null,
+    freeze:   dayPicks.find(p=>(parseFloat(p.score)||0)===minScore)?.player || null,
+  };
+}
+
+function getPickBadges(pick) {
+  if (!pick?.player) return '';
+  const b = getDayBadges(pick.date);
+  return (pick.player===b.bullseye?'🎯':'') + (pick.player===b.thumbsup?'👍':'') + (pick.player===b.freeze?'🥶':'');
+}
+
+function getTeamBadgeCounts(teamName) {
+  let bullseye=0, thumbsup=0, freeze=0;
+  getTeamPicks(teamName).forEach(pick => {
+    const b = getDayBadges(pick.date);
+    if (pick.player===b.bullseye) bullseye++;
+    if (pick.player===b.thumbsup) thumbsup++;
+    if (pick.player===b.freeze)   freeze++;
+  });
+  return {bullseye, thumbsup, freeze};
+}
 
 function getPlayerUsage() {
   const u={};
@@ -819,6 +861,7 @@ function renderRace() {
     const carLeft = Math.round(frac * USABLE);
     const lastPick = getTeamPicks(team.name)[0];
     const driver = lastPick?.player || '—';
+    const driverBadges = getPickBadges(lastPick);
 
     const posCls = rank===0 ? 'p1' : rank===1 ? 'p2' : rank===2 ? 'p3' : '';
 
@@ -844,7 +887,7 @@ function renderRace() {
         <div style="position:absolute;left:${USABLE*0.66}px;top:0;bottom:0;width:1px;background:#1e1e1e;"></div>
         <div class="car-slot" style="left:${carLeft}px;">
           <canvas class="car-canvas" id="car-${team.idx}" width="48" height="24" style="width:48px;height:24px;"></canvas>
-          <span class="car-driver">${driver}</span>
+          <span class="car-driver">${driver}${driverBadges?' '+driverBadges:''}</span>
         </div>
       </div>
       <div class="race-score-col" style="color:${rank<3?'var(--gold)':'var(--muted2)'};">
@@ -998,7 +1041,19 @@ function renderIntel() {
       </div>`).join('')
     : '<div style="color:var(--muted);font-size:12px;">No data yet</div>';
 
-const sorted=[...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
+  const badgeSorted = [...TEAMS].map(t=>{
+    const b=getTeamBadgeCounts(t.name);
+    return {...t, ...b, total:b.bullseye+b.thumbsup+b.freeze};
+  }).sort((a,b)=>b.bullseye-a.bullseye||b.thumbsup-a.thumbsup||a.freeze-b.freeze);
+  document.getElementById('badge-stats').innerHTML = badgeSorted.map(t=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;">
+      <div style="min-width:150px;font-family:var(--mono);font-size:10px;color:var(--muted2);">${t.name}</div>
+      <span title="High score nights">🎯 ${t.bullseye}</span>
+      <span title="Most popular pick nights" style="margin-left:8px;">👍 ${t.thumbsup}</span>
+      <span title="Ice cold nights" style="margin-left:8px;">🥶 ${t.freeze}</span>
+    </div>`).join('');
+
+  const sorted=[...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
   const max=sorted[0].pts;
   document.getElementById('bar-chart').innerHTML = sorted.map((t,i)=>{
     const pct=(t.pts/max*100).toFixed(1);
