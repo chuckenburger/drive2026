@@ -677,6 +677,12 @@ function getTeamPicks(name) {
 function getAllDates() { return [...new Set(picks.map(p=>p.date))].sort(); }
 function getPickForTeamDate(team,date) { return picks.find(p=>p.team===team&&p.date===date); }
 
+function abbrevName(name) {
+  if (!name) return '—';
+  const parts = name.trim().split(' ');
+  return parts.length > 1 ? parts[0][0] + '. ' + parts.slice(1).join(' ') : name;
+}
+
 function getDayBadges(date) {
   const dayPicks = picks.filter(p => p.date === date);
   if (!dayPicks.length) return {bullseye:null, thumbsup:null, freeze:null};
@@ -860,7 +866,7 @@ function renderRace() {
     const frac = ptRange > 0 ? (team.pts - lastPts) / ptRange : (rank === 0 ? 1 : 0.5);
     const carLeft = Math.round(frac * USABLE);
     const lastPick = getTeamPicks(team.name)[0];
-    const driver = lastPick?.player || '—';
+    const driver = abbrevName(lastPick?.player);
     const driverBadges = getPickBadges(lastPick);
 
     const posCls = rank===0 ? 'p1' : rank===1 ? 'p2' : rank===2 ? 'p3' : '';
@@ -869,7 +875,7 @@ function renderRace() {
     const lwPicks = getLoneWolfPicks(team.name);
     const lwBest = lwPicks.length ? parseFloat(lwPicks[0].score)||0 : 0;
     const lwBadge = lwBest > 0
-      ? `<span title="Best lone wolf: ${lwPicks[0].player} (${lwBest}pts on ${lwPicks[0].date})" style="font-family:var(--mono);font-size:9px;color:#888;cursor:default;">🐺${lwBest}</span>`
+      ? `<span title="Best lone wolf: ${abbrevName(lwPicks[0].player)} (${lwBest}pts on ${lwPicks[0].date})" style="font-family:var(--mono);font-size:9px;color:#888;cursor:default;">🐺${lwBest}</span>`
       : `<span title="No lone wolf picks yet" style="font-size:12px;opacity:0.5;cursor:default;">🐑</span>`;
 
     const escapedName = team.name.replace(/'/g,"\\'");
@@ -945,7 +951,7 @@ function renderFocusedView(name) {
     const score=parseFloat(p.score)||0;
     const col=score>=40?'var(--gold)':score>=25?'#d97b3a':'var(--muted2)';
     return `<div class="deep-pick-row">
-      <div><div style="font-weight:500;">${p.player||'—'}</div><div style="font-size:10px;color:var(--muted);">${p.date}</div></div>
+      <div><div style="font-weight:500;">${abbrevName(p.player)}</div><div style="font-size:10px;color:var(--muted);">${p.date}</div></div>
       <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:${col};">${p.score}</div>
     </div>`;
   }).join('') || '<div style="color:var(--muted);font-size:12px;">No picks yet</div>';
@@ -955,7 +961,7 @@ function renderFocusedView(name) {
     const pct=Math.round(teamsUsed/TEAMS.length*100);
     const col=pct>=50?'var(--gold)':pct>=25?'#d97b3a':'var(--muted2)';
     return `<div class="deep-pick-row">
-      <div><div style="font-weight:500;">${u.player}</div><div style="font-size:10px;color:var(--muted);">${teamsUsed}/${TEAMS.length} teams · avg ${u.avg.toFixed(1)}</div></div>
+      <div><div style="font-weight:500;">${abbrevName(u.player)}</div><div style="font-size:10px;color:var(--muted);">${teamsUsed}/${TEAMS.length} teams · avg ${u.avg.toFixed(1)}</div></div>
       <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:${col};">${pct}%</div>
     </div>`;
   }).join('') || '<div style="color:var(--muted);font-size:12px;">No untried players</div>';
@@ -1000,7 +1006,7 @@ function renderMatrix() {
       const pick=getPickForTeamDate(team.name,d);
       if(pick){
         const cls=scoreClass(pick.score);
-        h+=`<td><div class="cell ${cls}" title="${pick.player}: ${pick.score}">${pick.score}</div></td>`;
+        h+=`<td><div class="cell ${cls}" title="${abbrevName(pick.player)}: ${pick.score}">${pick.score}</div></td>`;
       } else {
         h+=`<td><div class="cell cell-empty">·</div></td>`;
       }
@@ -1019,7 +1025,7 @@ function renderIntel() {
   const maxC = usage[0]?.count||1;
   document.getElementById('most-used').innerHTML = usage.length
     ? usage.map(u=>`<div class="player-row">
-        <div><div class="player-name">${u.player}</div>
+        <div><div class="player-name">${abbrevName(u.player)}</div>
         <div class="usage-bar-wrap"><div class="usage-bar" style="width:${(u.count/maxC*100).toFixed(0)}%"></div></div></div>
         <div style="text-align:right"><div class="player-score">${u.count}×</div><div class="player-sub">avg ${u.avg.toFixed(1)}</div></div>
       </div>`).join('')
@@ -1028,7 +1034,7 @@ function renderIntel() {
   const best = getBestPicks();
   document.getElementById('best-picks').innerHTML = best.length
     ? best.map(p=>`<div class="player-row">
-        <div><div class="player-name">${p.player||'—'}</div><div class="player-sub">${p.team} · ${p.date}</div></div>
+        <div><div class="player-name">${abbrevName(p.player)}</div><div class="player-sub">${p.team} · ${p.date}</div></div>
         <div class="player-score">${p.score}</div>
       </div>`).join('')
     : '<div style="color:var(--muted);font-size:12px;">No data yet</div>';
@@ -1059,11 +1065,7 @@ function renderIntel() {
     const pct=(t.pts/max*100).toFixed(1);
     const col=i<3?'var(--gold)':i<8?'var(--blue)':'var(--border2)';
     const teamPicks=[...getTeamPicks(t.name)].sort((a,b)=>(parseFloat(b.score)||0)-(parseFloat(a.score)||0));
-    const breakdown=teamPicks.map(p=>{
-      const parts=(p.player||'').trim().split(' ');
-      const abbrev=parts.length>1?parts[0][0]+'. '+parts.slice(1).join(' '):p.player;
-      return `${abbrev} ${p.score}`;
-    }).join(' · ');
+    const breakdown=teamPicks.map(p=>`${abbrevName(p.player)} ${p.score}`).join(' · ');
     return `<div class="bar-row">
       <div class="bar-row-top">
         <div class="bar-label">${t.name}</div>
@@ -1100,7 +1102,7 @@ function renderLoneWolf() {
             <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;">pts · best lone wolf</div>
           </div>
         </div>
-        ${leaders.map(t => t.best ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(240,192,64,0.15);font-size:11px;color:var(--muted2);">${t.name} — ${t.best.player} on ${t.best.date}</div>` : '').join('')}
+        ${leaders.map(t => t.best ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(240,192,64,0.15);font-size:11px;color:var(--muted2);">${t.name} — ${abbrevName(t.best.player)} on ${t.best.date}</div>` : '').join('')}
         ${isTie ? `<div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--blue);">⚡ Tied — prize splits if season ends here</div>` : ''}
       </div>`;
   } else {
@@ -1117,7 +1119,7 @@ function renderLoneWolf() {
       <div style="font-family:var(--mono);font-size:10px;font-weight:700;min-width:28px;color:${t.bestScore>0&&i<3?col:'var(--muted)'};">P${i+1}</div>
       <div style="min-width:150px;">
         <div style="font-size:12px;font-weight:500;">${t.name}</div>
-        ${t.best ? `<div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:1px;">${t.best.player} · ${t.best.date}</div>` : ''}
+        ${t.best ? `<div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:1px;">${abbrevName(t.best.player)} · ${t.best.date}</div>` : ''}
       </div>
       <div style="flex:1;height:14px;background:var(--border);border-radius:2px;overflow:hidden;">
         <div style="width:${pct}%;height:100%;background:${col};border-radius:2px;transition:width 0.4s;"></div>
