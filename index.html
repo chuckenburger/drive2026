@@ -761,9 +761,9 @@ function lightenHex(hex,amt){
 // Custom Workshop sprites override these entirely.
 // Indexed same as TEAMS / TEAM_COLORS.
 const TEAM_VARIANTS = [
-  {nose:'#ffffff', stripe:null},       // 0  HenryJ          red body, white nose
-  {nose:'#111111', stripe:'#ffffff'},  // 1  Koonal           teal, black nose, white stripe
-  {nose:'#ffffff', stripe:'#111111'},  // 2  Zinger           orange, white nose, black stripe
+  {nose:'#ffd700', stripe:null},       // 0  HenryJ          red body, gold nose
+  {nose:'#ff6600', stripe:'#ffd700'},  // 1  Koonal           teal, orange nose, gold stripe
+  {nose:'#0055ff', stripe:'#ff6600'},  // 2  Zinger           orange, blue nose, orange stripe
   {nose:'#ffd700', stripe:null},       // 3  Alex0911         blue, gold nose
   {nose:'#ffd700', stripe:null},       // 4  Dopeboymagic23   dark teal, gold nose
   {nose:'#ffd700', stripe:null},       // 5  Jfok             purple, gold nose
@@ -771,19 +771,19 @@ const TEAM_VARIANTS = [
   {nose:'#ffd700', stripe:'#ffffff'},  // 7  It's Klebering Time  dark red, gold nose, white stripe
   {nose:'#ff0000', stripe:null},       // 8  Deevy            gray, red nose
   {nose:'#0055ff', stripe:null},       // 9  Hotchuckolate    gray, blue nose
-  {nose:'#ffffff', stripe:'#111111'},  // 10 Paladizzle       green, white nose, black stripe
-  {nose:'#111111', stripe:null},       // 11 Diddy Got Giddey pink, black nose
-  {nose:'#111111', stripe:'#ff0000'},  // 12 GokulAgrawal     gold, black nose, red stripe
-  {nose:'#ffffff', stripe:null},       // 13 GayforJs         slate blue, white nose
+  {nose:'#ff6600', stripe:'#ffd700'},  // 10 Paladizzle       green, orange nose, gold stripe
+  {nose:'#ffd700', stripe:null},       // 11 Diddy Got Giddey pink, gold nose
+  {nose:'#cc00cc', stripe:'#ff0000'},  // 12 GokulAgrawal     gold, magenta nose, red stripe
+  {nose:'#ff6600', stripe:null},       // 13 GayforJs         slate blue, orange nose
   {nose:'#9b59b6', stripe:null},       // 14 LakersFan22      orange-red, purple nose
   {nose:'#ffd700', stripe:null},       // 15 Lmcclelland      sky blue, yellow nose
   {nose:'#ff0000', stripe:null},       // 16 Shawnuberoi      green, red nose
   {nose:'#ffd700', stripe:'#ffffff'},  // 17 NickelNdime      red, gold nose, white stripe
   {nose:'#ff6600', stripe:null},       // 18 WolvesInThisBih  teal, orange nose
-  {nose:'#111111', stripe:'#ff0000'},  // 19 GoTheDistance    yellow-orange, black nose, red stripe
-  {nose:'#ffffff', stripe:'#ff0000'},  // 20 Jimbo17          steel blue, white nose, red stripe
-  {nose:'#111111', stripe:null},       // 21 Mdbrenyo         carrot orange, black nose
-  {nose:'#ffffff', stripe:'#ffd700'},  // 22 Rramchandani     dark red, white nose, gold stripe
+  {nose:'#0055ff', stripe:'#ff0000'},  // 19 GoTheDistance    yellow-orange, blue nose, red stripe
+  {nose:'#ff0000', stripe:'#ff6600'},  // 20 Jimbo17          steel blue, red nose, orange stripe
+  {nose:'#9b59b6', stripe:null},       // 21 Mdbrenyo         carrot orange, purple nose
+  {nose:'#ffd700', stripe:'#ff6600'},  // 22 Rramchandani     dark red, gold nose, orange stripe
 ];
 
 function getDefaultSprite(color, noseColor, stripeColor) {
@@ -800,7 +800,7 @@ function getDefaultSprite(color, noseColor, stripeColor) {
     [_,_,_,W,_,L,C,C,C,C,_,W,_,_,_,_],
     [_,_,W,R,W,_,L,L,L,_,W,R,W,_,_,_],
     [_,_,_,W,_,_,_,_,_,_,_,W,_,_,_,_],
-  ];
+  ].map(row => [...row].reverse());
 }
 
 function getSpriteForTeam(name, color) {
@@ -1280,6 +1280,7 @@ function renderReplay() {
 
   let progress = 0;
   const SPEED = 0.05; // dates revealed per frame (~330ms per date at 60fps)
+  const carImgs = TEAMS.map((_, ti) => makeCarImage(ti));
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
@@ -1350,17 +1351,15 @@ function renderReplay() {
       ctx.stroke();
       ctx.globalAlpha = 1;
 
-      // Dot at current front position
+      // Car sprite at current front position
       const dotR0 = ranks[curDi][ti];
       const dotR1 = curDi < N - 1 ? ranks[curDi + 1][ti] : dotR0;
       const mt = 1 - frac, t = frac;
       const dotY = (curDi < N - 1 && frac > 0)
         ? mt*mt*mt*yOf(dotR0) + 3*mt*mt*t*yOf(dotR0) + 3*mt*t*t*yOf(dotR1) + t*t*t*yOf(dotR1)
         : yOf(dotR0);
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(leadX, dotY, 3, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(carImgs[ti], leadX - 12, dotY - 6, 24, 12);
     });
 
     // Right-side labels sorted by current rank
