@@ -246,8 +246,6 @@ nav {
 }
 
 /* ── MOBILE RACE LAYOUT ── */
-.car-driver-mobile { display: none; }
-
 /* On small screens: label column shows P1 + name + score stacked,
    track shrinks, score col hidden */
 @media (max-width: 600px) {
@@ -288,17 +286,6 @@ nav {
   }
   .car-driver {
     display: none;
-  }
-  .car-driver-mobile {
-    display: block;
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--muted);
-    margin-top: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 128px;
   }
 }
 
@@ -900,7 +887,6 @@ function renderRace() {
           <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;color:${nameColor};">${team.name}${lwLeaders.has(team.name) ? ' 🐺' : ''}</span>
         </div>
         <span class="race-score-inline" style="display:none;color:${nameColor};">${team.pts}${lwBest>0?' 🐺'+lwBest:' 🐑'}</span>
-        <span class="car-driver-mobile">${driver}${driverBadges?' '+driverBadges:''}</span>
       </div>
       <div class="race-row-track" style="width:${TRACK_W}px;min-width:${TRACK_W}px;">
         <div style="position:absolute;left:${USABLE*0.33}px;top:0;bottom:0;width:1px;background:#1e1e1e;"></div>
