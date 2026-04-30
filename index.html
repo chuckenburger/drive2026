@@ -442,40 +442,6 @@ nav {
 .chip.alive  { background: rgba(61,220,132,0.08); border-color: rgba(61,220,132,0.3); color: var(--green); }
 .chip.dead   { background: transparent; border-color: var(--border); color: var(--muted); text-decoration: line-through; }
 
-/* ── ENTRY ── */
-.entry-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 20px;
-  margin-bottom: 16px;
-}
-.entry-card h3 {
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-@media(max-width:500px){ .form-row { grid-template-columns: 1fr; } }
-.field label { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-.field input, .field select {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  border-radius: 4px;
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 12px;
-  padding: 9px 10px;
-  outline: none;
-  transition: border-color 0.15s;
-  -webkit-appearance: none;
-}
-.field input:focus, .field select:focus { border-color: var(--gold); }
 
 .btn {
   background: var(--gold);
@@ -495,53 +461,6 @@ nav {
 .btn-ghost:hover { color: var(--text); border-color: var(--border); opacity: 1; }
 .btn-danger { background: var(--red); color: #fff; }
 
-.upload-zone {
-  border: 1px dashed var(--border2);
-  border-radius: 6px;
-  padding: 32px 20px;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  transition: border-color 0.15s, background 0.15s;
-}
-.upload-zone:hover, .upload-zone.drag-over {
-  border-color: var(--gold);
-  background: rgba(240,192,64,0.04);
-}
-.upload-zone input[type=file] { position: absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-.upload-icon { font-size: 28px; margin-bottom: 8px; }
-.upload-text { font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.upload-text strong { color: var(--gold); }
-
-.parse-result { display: none; margin-top: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 14px; }
-.parse-result.visible { display: block; }
-.parse-result pre { font-size: 11px; color: var(--muted2); white-space: pre-wrap; word-break: break-word; max-height: 200px; overflow-y: auto; }
-
-.loading { display: none; align-items: center; gap: 8px; color: var(--muted2); font-family: var(--mono); font-size: 11px; margin-top: 12px; }
-.loading.visible { display: flex; }
-.spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.log-entry { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
-.log-entry:last-child { border-bottom: none; }
-.log-date { font-family: var(--mono); font-size: 9px; color: var(--muted); min-width: 52px; }
-.log-score { font-family: var(--mono); font-size: 15px; font-weight: 700; min-width: 36px; text-align: right; }
-.log-score.great { color: var(--gold); }
-.log-score.ok    { color: var(--blue); }
-.log-score.bad   { color: var(--muted); }
-.log-del { margin-left: auto; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 2px 5px; border-radius: 3px; }
-.log-del:hover { color: var(--red); background: rgba(255,77,77,0.08); }
-
-.export-box { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 12px; margin-top: 12px; }
-.export-box textarea { width:100%; background:transparent; border:none; color:var(--muted2); font-family:var(--mono); font-size:10px; resize:vertical; min-height:100px; outline:none; }
-
-/* Workshop */
-.workshop-row { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.workshop-row:last-child { border-bottom:none; }
-.workshop-preview { width:48px; height:24px; background: var(--bg); border:1px solid var(--border); border-radius:3px; flex-shrink:0; overflow:hidden; }
-.workshop-name { font-family:var(--mono); font-size:10px; font-weight:600; min-width:130px; }
-.workshop-badge { font-family:var(--mono); font-size:9px; color:var(--gold); }
-.workshop-actions { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
 .workshop-input { background:var(--bg); border:1px solid var(--border2); border-radius:4px; color:var(--text); font-family:var(--mono); font-size:11px; padding:6px 9px; width:150px; outline:none; }
 .workshop-input:focus { border-color:var(--gold); }
 .wspin { display:none; align-items:center; gap:6px; font-family:var(--mono); font-size:10px; color:var(--muted); }
@@ -588,7 +507,6 @@ nav {
   <button class="nav-btn" onclick="showTab('matrix',this)">🔥 Usage</button>
   <button class="nav-btn" onclick="showTab('intel',this)">📊 Intel</button>
   <button class="nav-btn" onclick="showTab('lonewolf',this)">🐺 Lone Wolf</button>
-  <button class="nav-btn" onclick="showTab('entry',this)">＋ Entry</button>
 </nav>
 
 <!-- RACE -->
@@ -665,71 +583,6 @@ nav {
 </div>
 
 <!-- ENTRY -->
-<div class="panel" id="panel-entry">
-
-  <div class="entry-card">
-    <h3>Import Screenshot</h3>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Upload a screenshot of the Log or Standings — Claude extracts all picks automatically.</p>
-    <div class="upload-zone" id="upload-zone">
-      <input type="file" accept="image/*" id="screenshot-input" onchange="handleScreenshot(event)">
-      <div class="upload-icon">📷</div>
-      <div class="upload-text">Tap or drag screenshot here<br><strong>supports PNG, JPG</strong></div>
-    </div>
-    <div class="loading" id="parse-loading"><div class="spinner"></div><span>Parsing screenshot…</span></div>
-    <div class="parse-result" id="parse-result">
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Extracted</div>
-      <pre id="parse-output"></pre>
-      <div style="margin-top:10px;display:flex;gap:8px;">
-        <button class="btn" onclick="applyParsed()">Apply All</button>
-        <button class="btn btn-ghost" onclick="dismissParsed()">Discard</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="entry-card">
-    <h3>Manual Entry</h3>
-    <div class="form-row">
-      <div class="field"><label>Date</label><input type="date" id="entry-date"></div>
-      <div class="field"><label>Team</label><select id="entry-team"></select></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label>Player</label><input type="text" id="entry-player" placeholder="e.g. T. Maxey"></div>
-      <div class="field"><label>Score</label><input type="number" id="entry-score" placeholder="43"></div>
-    </div>
-    <button class="btn" onclick="addManualEntry()">Add Pick</button>
-  </div>
-
-  <div class="entry-card">
-    <h3>Pick Log</h3>
-    <div id="pick-log-list" style="max-height:360px;overflow-y:auto;"></div>
-  </div>
-
-  <div class="entry-card">
-    <h3>Export / Save</h3>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Save <code style="color:var(--gold)">picks.json</code> to your GitHub repo to sync across devices.</p>
-    <div class="export-box"><textarea id="export-json" readonly></textarea></div>
-    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn" onclick="copyExport()">Copy JSON</button>
-      <button class="btn btn-ghost" onclick="downloadExport()">Download</button>
-      <button class="btn btn-danger" onclick="clearAllData()">Clear All</button>
-    </div>
-  </div>
-
-  <div class="entry-card">
-    <h3>Import JSON</h3>
-    <div class="field" style="margin-bottom:10px;">
-      <textarea id="import-json" style="width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:11px;padding:9px;min-height:80px;outline:none;" placeholder="Paste picks.json here…"></textarea>
-    </div>
-    <button class="btn btn-ghost" onclick="importJSON()">Import</button>
-  </div>
-
-  <div class="entry-card">
-    <h3>Vehicle Workshop</h3>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:14px;">Type a vehicle inspiration and Claude generates a custom 8-bit sprite for each team.</p>
-    <div id="vehicle-workshop"></div>
-  </div>
-
-</div>
 
 <div class="toast" id="toast"></div>
 
@@ -776,14 +629,9 @@ const TEAM_COLORS = [
   "#3498db","#e67e22","#c0392b"
 ];
 
-let picks = JSON.parse(localStorage.getItem('fp_picks') || '[]');
-let parsedData = null;
+let picks = [];
 let customSprites = JSON.parse(localStorage.getItem('fp_sprites') || '{}');
 
-function savePicks() {
-  localStorage.setItem('fp_picks', JSON.stringify(picks));
-  localStorage.setItem('fp_updated', new Date().toISOString());
-}
 function saveSprites() { localStorage.setItem('fp_sprites', JSON.stringify(customSprites)); }
 
 // ============================================================
@@ -1009,7 +857,7 @@ function scoreClass(s) {
 function renderMatrix() {
   const dates = getAllDates();
   const t = document.getElementById('matrix-table');
-  if (!dates.length) { t.innerHTML='<tr><td style="color:var(--muted);padding:20px;font-family:var(--mono);font-size:11px;">No picks yet — add some in Entry tab</td></tr>'; return; }
+  if (!dates.length) { t.innerHTML='<tr><td style="color:var(--muted);padding:20px;font-family:var(--mono);font-size:11px;">No picks yet.</td></tr>'; return; }
 
   const sorted = [...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
 
@@ -1079,330 +927,6 @@ function renderIntel() {
     return `<div class="bar-row">
       <div class="bar-label">${t.name}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"><span class="bar-val">${t.pts}</span></div></div>
-    </div>`;
-  }).join('');
-}
-
-// ============================================================
-// RENDER PICK LOG + EXPORT
-// ============================================================
-function renderPickLog() {
-  const list=document.getElementById('pick-log-list');
-  const sorted=[...picks].sort((a,b)=>b.date.localeCompare(a.date));
-  if(!sorted.length){list.innerHTML='<div style="color:var(--muted);font-family:var(--mono);font-size:11px;padding:10px 0;">No picks logged yet.</div>';return;}
-  list.innerHTML=sorted.map(p=>{
-    const n=parseFloat(p.score)||0;
-    const cls=n>=35?'great':n>=20?'ok':'bad';
-    const idx=picks.findIndex(x=>x.date===p.date&&x.team===p.team&&x.player===p.player);
-    return `<div class="log-entry">
-      <div class="log-date">${p.date}</div>
-      <div style="flex:1"><div style="font-size:12px;font-weight:500;">${p.team}</div><div style="font-size:10px;color:var(--muted);">${p.player||'—'}</div></div>
-      <div class="log-score ${cls}">${p.score}</div>
-      <button class="log-del" onclick="deletePick(${idx})">✕</button>
-    </div>`;
-  }).join('');
-}
-
-function renderExport() {
-  document.getElementById('export-json').value=JSON.stringify(picks,null,2);
-}
-
-function populateEntryForm() {
-  document.getElementById('entry-team').innerHTML=TEAMS.map(t=>`<option value="${t.name}">${t.name}</option>`).join('');
-  document.getElementById('entry-date').value=new Date().toISOString().split('T')[0];
-}
-
-// ============================================================
-// VEHICLE WORKSHOP
-// ============================================================
-function renderVehicleWorkshop() {
-  const el=document.getElementById('vehicle-workshop');
-  if(!el) return;
-  el.innerHTML=TEAMS.map((t,i)=>{
-    const hasCustom=!!customSprites[t.name];
-    return `<div class="workshop-row">
-      <div class="workshop-preview"><canvas id="prev-canvas-${i}" width="48" height="24" style="image-rendering:pixelated;width:48px;height:24px;display:block;"></canvas></div>
-      <div style="min-width:130px;"><div class="workshop-name">${t.name}</div>${hasCustom?'<div class="workshop-badge">✨ custom</div>':''}</div>
-      <div class="workshop-actions">
-        <input type="text" class="workshop-input" id="veh-input-${i}" placeholder="e.g. monster truck…">
-        <button class="btn" style="padding:6px 10px;font-size:10px;" onclick="generateVehicle('${t.name.replace(/'/g,"\\'")}',${i})">Gen</button>
-        ${hasCustom?`<button class="btn btn-ghost" style="padding:6px 10px;font-size:10px;" onclick="resetVehicle('${t.name.replace(/'/g,"\\'")}',${i})">Reset</button>`:''}
-      </div>
-      <div class="wspin" id="wspin-${i}"><div class="spinner"></div></div>
-      <div class="werr" id="werr-${i}"></div>
-    </div>`;
-  }).join('');
-
-  TEAMS.forEach((t,i)=>{
-    const c=document.getElementById(`prev-canvas-${i}`);
-    if(!c) return;
-    const ctx=c.getContext('2d');
-    ctx.clearRect(0,0,48,24);
-    drawSprite(ctx,0,0,getSpriteForTeam(t.name,TEAM_COLORS[i%TEAM_COLORS.length]),3);
-  });
-}
-
-async function generateVehicle(teamName,idx) {
-  const input=document.getElementById(`veh-input-${idx}`)?.value?.trim();
-  if(!input){showToast('Enter a description first',true);return;}
-  const spinner=document.getElementById(`wspin-${idx}`);
-  const errEl=document.getElementById(`werr-${idx}`);
-  spinner.style.display='flex';
-  if(errEl) errEl.textContent='';
-  try {
-    const color=TEAM_COLORS[idx%TEAM_COLORS.length];
-    const sprite=await callClaudeForSprite(input,color,teamName);
-    customSprites[teamName]=sprite;
-    saveSprites();
-    renderVehicleWorkshop();
-    renderRace();
-    showToast(`✨ ${teamName} vehicle updated!`);
-  } catch(e) {
-    console.error('[generateVehicle]',e);
-    if(errEl) errEl.textContent='⚠ '+e.message;
-    showToast('Failed: '+e.message,true);
-  } finally { spinner.style.display='none'; }
-}
-
-function resetVehicle(teamName,idx) {
-  delete customSprites[teamName]; saveSprites(); renderVehicleWorkshop(); renderRace();
-  showToast('Reset to default');
-}
-
-// ============================================================
-// CLAUDE API
-// ============================================================
-async function claudeAPI(body) {
-  console.log('[claudeAPI] sending…');
-  const resp=await fetch("https://api.anthropic.com/v1/messages",{
-    method:"POST",
-    headers:{"Content-Type":"application/json","anthropic-dangerous-direct-browser-access":"true"},
-    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1500,...body})
-  });
-  console.log('[claudeAPI] status:',resp.status);
-  if(!resp.ok){
-    let msg=`HTTP ${resp.status}`;
-    try{const e=await resp.json();msg=e.error?.message||JSON.stringify(e);}catch(_){}
-    throw new Error(msg);
-  }
-  const data=await resp.json();
-  const text=data.content.map(c=>c.text||'').join('').trim();
-  console.log('[claudeAPI] response:',text.slice(0,200));
-  return text;
-}
-
-function extractJSON(raw) {
-  try{return JSON.parse(raw);}catch(_){}
-  let s=raw.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
-  try{return JSON.parse(s);}catch(_){}
-  const a=s.indexOf('['),b=s.lastIndexOf(']');
-  if(a!==-1&&b>a){try{return JSON.parse(s.slice(a,b+1));}catch(_){}}
-  const c=s.indexOf('{'),d=s.lastIndexOf('}');
-  if(c!==-1&&d>c){try{return JSON.parse(s.slice(c,d+1));}catch(_){}}
-  throw new Error('Could not parse JSON: '+s.slice(0,100));
-}
-
-async function parseWithClaude(base64Image) {
-  const knownTeams=TEAMS.map(t=>t.name).join(', ');
-  const text=await claudeAPI({messages:[{role:"user",content:[
-    {type:"image",source:{type:"base64",media_type:"image/jpeg",data:base64Image}},
-    {type:"text",text:`Parse this fantasy basketball screenshot. Known teams: ${knownTeams}
-Return ONLY a raw JSON array: [{"date":"YYYY-MM-DD","team":"...","player":"...","score":43}]
-Today: ${new Date().toISOString().split('T')[0]}. No markdown, no explanation.`}
-  ]}]});
-  return extractJSON(text);
-}
-
-async function callClaudeForSprite(description,color,teamName) {
-  const text=await claudeAPI({messages:[{role:"user",content:
-    `Pixel art 8-bit top-down vehicle sprite for: "${description}"
-Team color: ${color}. Team: ${teamName}.
-Output: JSON array of exactly 8 arrays, each with exactly 16 values (CSS color string or null).
-Vehicle faces RIGHT. Top-down view. Use ${color} as dominant body color.
-Respond with ONLY the raw JSON array starting with [ and ending with ]. No other text.`
-  }]});
-  const parsed=extractJSON(text);
-  if(!Array.isArray(parsed)) throw new Error('Not an array');
-  const fixed=[];
-  for(let r=0;r<8;r++){
-    const row=Array.isArray(parsed[r])?parsed[r]:[];
-    fixed.push(Array.from({length:16},(_,c)=>(typeof row[c]==='string'&&row[c])?row[c]:null));
-  }
-  return fixed;
-}
-
-// ============================================================
-// SCREENSHOT HANDLER
-// ============================================================
-async function handleScreenshot(event) {
-  const file=event.target.files[0]; if(!file) return;
-  const loading=document.getElementById('parse-loading');
-  const result=document.getElementById('parse-result');
-  result.classList.remove('visible'); loading.classList.add('visible');
-  try {
-    const base64=await fileToBase64(file);
-    parsedData=await parseWithClaude(base64);
-    document.getElementById('parse-output').textContent=JSON.stringify(parsedData,null,2);
-    result.classList.add('visible');
-  } catch(e){ showToast('Parse error: '+e.message,true); }
-  finally{ loading.classList.remove('visible'); event.target.value=''; }
-}
-function fileToBase64(file){
-  return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=()=>rej(new Error('Read failed'));r.readAsDataURL(file);});
-}
-
-function applyParsed(){
-  if(!parsedData||!Array.isArray(parsedData)) return;
-  let added=0,skipped=0;
-  parsedData.forEach(p=>{
-    if(!p.date||!p.team||p.score==null){skipped++;return;}
-    if(picks.find(x=>x.date===p.date&&x.team===p.team)){skipped++;return;}
-    picks.push({date:p.date,team:p.team,player:p.player||'',score:parseFloat(p.score)});
-    added++;
-  });
-  savePicks(); renderAll();
-  document.getElementById('parse-result').classList.remove('visible');
-  parsedData=null;
-  showToast(`Added ${added} picks${skipped?`, skipped ${skipped}`:''}`)
-}
-function dismissParsed(){parsedData=null;document.getElementById('parse-result').classList.remove('visible');}
-
-// Drag and drop
-const zone=document.getElementById('upload-zone');
-zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});
-zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
-zone.addEventListener('drop',e=>{
-  e.preventDefault();zone.classList.remove('drag-over');
-  const file=e.dataTransfer.files[0];
-  if(file&&file.type.startsWith('image/')){
-    const dt=new DataTransfer();dt.items.add(file);
-    document.getElementById('screenshot-input').files=dt.files;
-    handleScreenshot({target:{files:dt.files,value:''}});
-  }
-});
-
-// ============================================================
-// MANUAL ENTRY / ACTIONS
-// ============================================================
-function addManualEntry(){
-  const date=document.getElementById('entry-date').value;
-  const team=document.getElementById('entry-team').value;
-  const player=document.getElementById('entry-player').value.trim();
-  const score=document.getElementById('entry-score').value;
-  if(!date||!team||!score){showToast('Fill in date, team, and score',true);return;}
-  if(picks.find(p=>p.date===date&&p.team===team)){showToast(`${team} already has a pick on ${date}`,true);return;}
-  picks.push({date,team,player,score:parseFloat(score)});
-  savePicks(); renderAll();
-  document.getElementById('entry-player').value='';
-  document.getElementById('entry-score').value='';
-  showToast('Pick added!');
-}
-
-function deletePick(idx){
-  if(idx<0||idx>=picks.length) return;
-  picks.splice(idx,1); savePicks(); renderAll(); showToast('Pick removed');
-}
-
-function copyExport(){navigator.clipboard.writeText(document.getElementById('export-json').value).then(()=>showToast('Copied!')).catch(()=>showToast('Copy failed',true));}
-function downloadExport(){const b=new Blob([document.getElementById('export-json').value],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='picks.json';a.click();}
-function clearAllData(){if(!confirm('Clear ALL pick data?')) return;picks=[];savePicks();renderAll();showToast('Cleared');}
-function importJSON(){
-  try{
-    const data=JSON.parse(document.getElementById('import-json').value);
-    if(!Array.isArray(data)) throw new Error('Expected array');
-    picks=data; savePicks(); renderAll();
-    document.getElementById('import-json').value='';
-    showToast(`Imported ${picks.length} picks`);
-  }catch(e){showToast('Invalid JSON: '+e.message,true);}
-}
-
-// ============================================================
-// RENDER LONE WOLF
-// ============================================================
-function renderLoneWolf() {
-  const lb = getLoneWolfLeaderboard();
-  const leader = lb.find(t => t.total > 0);
-
-  // Leader card
-  const leaderCard = document.getElementById('lw-leader-card');
-  if (leader) {
-    leaderCard.innerHTML = `
-      <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.2);border-radius:6px;padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <div style="font-size:28px;">🐺</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Current Leader</div>
-          <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--gold);">${leader.name}</div>
-          <div style="font-size:12px;color:var(--muted2);margin-top:3px;">${leader.count} lone wolf pick${leader.count!==1?'s':''} · ${leader.total.toFixed(0)} pts total</div>
-        </div>
-        ${leader.best ? `<div style="margin-left:auto;text-align:right;">
-          <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;">Best Single</div>
-          <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--text);">${leader.best.score}</div>
-          <div style="font-size:11px;color:var(--muted2);">${leader.best.player} · ${leader.best.date}</div>
-        </div>` : ''}
-      </div>`;
-  } else {
-    leaderCard.innerHTML = `<div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:12px 0;">No lone wolf picks recorded yet.</div>`;
-  }
-
-  // Per-night breakdown — all unique picks across all dates
-  const dates = getAllDates().slice().reverse(); // most recent first
-  const nightsEl = document.getElementById('lw-nights');
-  let nightsHtml = '';
-  let anyFound = false;
-
-  dates.forEach(date => {
-    const dayPicks = picks.filter(p => p.date === date);
-    // Find picks where only one team picked that player
-    const playerCounts = {};
-    dayPicks.forEach(p => {
-      if (!p.player) return;
-      playerCounts[p.player] = (playerCounts[p.player] || 0) + 1;
-    });
-    const loneWolves = dayPicks.filter(p => p.player && playerCounts[p.player] === 1);
-    if (!loneWolves.length) return;
-    anyFound = true;
-
-    const dt = new Date(date + 'T12:00:00');
-    const dateStr = dt.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
-
-    nightsHtml += `<div style="padding:10px 0;border-bottom:1px solid var(--border);">
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">${dateStr}</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;">`;
-
-    loneWolves.sort((a,b) => (parseFloat(b.score)||0) - (parseFloat(a.score)||0)).forEach(p => {
-      const score = parseFloat(p.score)||0;
-      const col = score >= 40 ? 'var(--gold)' : score >= 25 ? '#d97b3a' : 'var(--muted2)';
-      nightsHtml += `
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:7px 10px;min-width:140px;">
-          <div style="font-size:12px;font-weight:500;">${p.player}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:1px;">${p.team}</div>
-          <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:${col};margin-top:4px;">${p.score} pts</div>
-        </div>`;
-    });
-    nightsHtml += `</div></div>`;
-  });
-
-  nightsEl.innerHTML = anyFound ? nightsHtml : '<div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:10px 0;">No lone wolf picks yet.</div>';
-
-  // Leaderboard
-  const lbEl = document.getElementById('lw-leaderboard');
-  const active = lb.filter(t => t.total > 0);
-  if (!active.length) {
-    lbEl.innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:10px 0;">No data yet.</div>';
-    return;
-  }
-  const maxTotal = active[0].total;
-  lbEl.innerHTML = lb.map((t, i) => {
-    const pct = maxTotal > 0 ? (t.total / maxTotal * 100).toFixed(1) : 0;
-    const col = i===0 ? 'var(--gold)' : i===1 ? '#c0c0c0' : i===2 ? '#cd7f32' : 'var(--border2)';
-    return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
-      <div style="font-family:var(--mono);font-size:10px;font-weight:700;min-width:28px;color:${i<3?col:'var(--muted)'};">P${i+1}</div>
-      <div style="min-width:150px;font-size:12px;font-weight:500;">${t.name}</div>
-      <div style="flex:1;height:14px;background:var(--border);border-radius:2px;overflow:hidden;">
-        <div style="width:${pct}%;height:100%;background:${col};border-radius:2px;"></div>
-      </div>
-      <div style="font-family:var(--mono);font-size:11px;font-weight:700;min-width:52px;text-align:right;color:${i<3?col:'var(--muted2)'};">${t.total > 0 ? t.total.toFixed(0)+' pts' : '—'}</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);min-width:40px;text-align:right;">${t.count > 0 ? t.count+'×' : ''}</div>
     </div>`;
   }).join('');
 }
@@ -1490,14 +1014,6 @@ function renderAll() {
   renderMatrix();
   renderIntel();
   renderLoneWolf();
-  renderPickLog();
-  renderExport();
-  renderVehicleWorkshop();
-  populateEntryForm();
-  const u=localStorage.getItem('fp_updated');
-  document.getElementById('last-updated').textContent=u
-    ?new Date(u).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
-    :'no data';
 }
 
 // ============================================================
@@ -1527,9 +1043,7 @@ const SEED_PICKS = [{"date": "2026-04-29", "team": "HenryJ", "player": "Cade Cun
 // INIT
 // ============================================================
 const SEED_DATES=[...new Set(SEED_PICKS.map(p=>p.date))];
-const storedPicks=JSON.parse(localStorage.getItem('fp_picks')||'[]');
-const extraPicks=storedPicks.filter(p=>!SEED_DATES.includes(p.date));
-picks=[...SEED_PICKS,...extraPicks];
+picks=[...SEED_PICKS];
 savePicks();
 renderAll();
 </script>
