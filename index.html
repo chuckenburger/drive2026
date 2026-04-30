@@ -890,7 +890,7 @@ function renderRace() {
       <div class="race-row-label">
         <div class="race-label-top">
           <span class="race-pos ${posCls}">P${rank+1}</span>
-          <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;color:${nameColor};">${team.name}</span>
+          <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;color:${nameColor};">${team.name}${lwLeaders.has(team.name) ? ' 🐺' : ''}</span>
         </div>
         <span class="race-score-inline" style="display:none;color:${nameColor};">${team.pts}${lwBest>0?' 🐺'+lwBest:' 🐑'}</span>
       </div>
