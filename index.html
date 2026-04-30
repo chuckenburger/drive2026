@@ -396,8 +396,9 @@ nav {
 }
 .usage-bar { height: 100%; background: var(--gold); }
 
-.bar-chart { display: flex; flex-direction: column; gap: 5px; }
-.bar-row { display: flex; align-items: center; gap: 8px; }
+.bar-chart { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: flex; flex-direction: column; gap: 3px; }
+.bar-row-top { display: flex; align-items: center; gap: 8px; }
 .bar-label {
   font-family: var(--mono);
   font-size: 9px;
@@ -428,6 +429,15 @@ nav {
   font-weight: 700;
   color: #000;
   white-space: nowrap;
+}
+.bar-picks {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  padding-left: 128px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .team-chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -993,9 +1003,18 @@ const sorted=[...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=
   document.getElementById('bar-chart').innerHTML = sorted.map((t,i)=>{
     const pct=(t.pts/max*100).toFixed(1);
     const col=i<3?'var(--gold)':i<8?'var(--blue)':'var(--border2)';
+    const teamPicks=[...getTeamPicks(t.name)].sort((a,b)=>(parseFloat(b.score)||0)-(parseFloat(a.score)||0));
+    const breakdown=teamPicks.map(p=>{
+      const parts=(p.player||'').trim().split(' ');
+      const abbrev=parts.length>1?parts[0][0]+'. '+parts.slice(1).join(' '):p.player;
+      return `${abbrev} ${p.score}`;
+    }).join(' · ');
     return `<div class="bar-row">
-      <div class="bar-label">${t.name}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"><span class="bar-val">${t.pts}</span></div></div>
+      <div class="bar-row-top">
+        <div class="bar-label">${t.name}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"><span class="bar-val">${t.pts}</span></div></div>
+      </div>
+      ${breakdown?`<div class="bar-picks">${breakdown}</div>`:''}
     </div>`;
   }).join('');
 }
