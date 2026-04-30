@@ -1279,7 +1279,7 @@ function renderReplay() {
   const yOf = rank => MT + ((rank - 1) / (T - 1)) * CH;
 
   let progress = 0;
-  const SPEED = 0.0375; // dates revealed per frame (~440ms per date at 60fps)
+  const SPEED = 0.028; // dates revealed per frame (~590ms per date at 60fps)
   const carImgs = TEAMS.map((_, ti) => makeCarImage(ti));
 
   function draw() {
