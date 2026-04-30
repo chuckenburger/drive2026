@@ -1279,7 +1279,7 @@ function renderReplay() {
   const yOf = rank => MT + ((rank - 1) / (T - 1)) * CH;
 
   let progress = 0;
-  const SPEED = 0.05; // dates revealed per frame (~330ms per date at 60fps)
+  const SPEED = 0.0375; // dates revealed per frame (~440ms per date at 60fps)
   const carImgs = TEAMS.map((_, ti) => makeCarImage(ti));
 
   function draw() {
@@ -1371,7 +1371,7 @@ function renderReplay() {
     sorted.forEach(({ team, ti, rank }) => {
       ctx.fillStyle = TEAM_COLORS[ti % TEAM_COLORS.length];
       const label = (rank <= 9 ? ' P' : 'P') + rank + ' ' + team.name.slice(0, 11);
-      ctx.fillText(label, ML + CW + 8, yOf(rank) + 3);
+      ctx.fillText(label, ML + CW + 20, yOf(rank) + 3);
     });
 
     // Advance animation
