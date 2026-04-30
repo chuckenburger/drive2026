@@ -563,10 +563,6 @@ nav {
       <div class="card-title">Hot Last 3 Picks</div>
       <div id="hot-streaks"></div>
     </div>
-    <div class="card">
-      <div class="card-title">Active NBA Teams</div>
-      <div class="team-chips" id="team-chips"></div>
-    </div>
   </div>
   <div style="margin-top:16px;" class="card">
     <div class="card-title">Points Leaderboard</div>
@@ -992,11 +988,7 @@ function renderIntel() {
       </div>`).join('')
     : '<div style="color:var(--muted);font-size:12px;">No data yet</div>';
 
-  document.getElementById('team-chips').innerHTML =
-    NBA_TEAMS.alive.map(t=>`<div class="chip alive">${t}</div>`).join('') +
-    NBA_TEAMS.eliminated.map(t=>`<div class="chip dead">${t}</div>`).join('');
-
-  const sorted=[...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
+const sorted=[...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
   const max=sorted[0].pts;
   document.getElementById('bar-chart').innerHTML = sorted.map((t,i)=>{
     const pct=(t.pts/max*100).toFixed(1);
