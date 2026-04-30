@@ -509,6 +509,7 @@ nav {
   <button class="nav-btn" onclick="showTab('matrix',this)">🔥 Usage</button>
   <button class="nav-btn" onclick="showTab('intel',this)">📊 Intel</button>
   <button class="nav-btn" onclick="showTab('lonewolf',this)">🐺 Lone Wolf</button>
+  <button class="nav-btn" onclick="showTab('replay',this)">📈 Replay</button>
 </nav>
 
 <!-- RACE -->
@@ -603,6 +604,17 @@ nav {
   <div class="card">
     <div class="card-title">Best Lone Wolf Score Per Team</div>
     <div id="lw-leaderboard"></div>
+  </div>
+</div>
+
+<!-- REPLAY -->
+<div class="panel" id="panel-replay">
+  <div style="padding:12px 16px 8px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.08em;">CHAMPIONSHIP RACE — POINTS OVER TIME</div>
+    <button class="btn btn-ghost" onclick="replayRestart()" style="font-size:10px;padding:3px 10px;">↺ REPLAY</button>
+  </div>
+  <div id="replay-wrap" style="padding:0 16px 16px;">
+    <canvas id="replay-canvas" style="display:block;"></canvas>
   </div>
 </div>
 
@@ -1205,6 +1217,174 @@ function showTab(name, btn) {
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   btn.classList.add('active');
+  if (name === 'replay') renderReplay();
+}
+
+// ============================================================
+// REPLAY — animated bump chart
+// ============================================================
+let _replayRaf = null;
+
+function replayRestart() {
+  if (_replayRaf) { cancelAnimationFrame(_replayRaf); _replayRaf = null; }
+  renderReplay();
+}
+
+function renderReplay() {
+  if (_replayRaf) { cancelAnimationFrame(_replayRaf); _replayRaf = null; }
+  const canvas = document.getElementById('replay-canvas');
+  if (!canvas) return;
+
+  const dates = getAllDates();
+  if (dates.length < 2) return;
+
+  // Cumulative scores per team per date index
+  const cumScores = TEAMS.map(team => {
+    let s = 0;
+    return dates.map(d => {
+      const p = getPickForTeamDate(team.name, d);
+      if (p) s += parseFloat(p.score) || 0;
+      return s;
+    });
+  });
+
+  // Unique rank at each date (stable sort: teams already ordered by idx for tiebreak)
+  const ranks = dates.map((_, di) => {
+    const pairs = TEAMS.map((_, ti) => ({ ti, s: cumScores[ti][di] }))
+      .sort((a, b) => b.s - a.s || a.ti - b.ti);
+    const r = new Array(TEAMS.length);
+    pairs.forEach(({ ti }, pos) => { r[ti] = pos + 1; });
+    return r;
+  });
+
+  // Canvas sizing
+  const dpr = window.devicePixelRatio || 1;
+  const wrap = document.getElementById('replay-wrap');
+  const W = wrap.clientWidth;
+  const H = Math.max(400, Math.min(560, window.innerHeight * 0.65));
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const ML = 28, MR = 132, MT = 28, MB = 12;
+  const CW = W - ML - MR;
+  const CH = H - MT - MB;
+  const N = dates.length;
+  const T = TEAMS.length;
+
+  const xOf = di => ML + (di / (N - 1)) * CW;
+  const yOf = rank => MT + ((rank - 1) / (T - 1)) * CH;
+
+  let progress = 0;
+  const SPEED = 0.05; // dates revealed per frame (~330ms per date at 60fps)
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const curDi = Math.min(Math.floor(progress), N - 1);
+    const frac = progress - Math.floor(progress);
+
+    // Subtle horizontal grid + P labels
+    ctx.font = '8px monospace';
+    ctx.textAlign = 'right';
+    [1, 5, 10, 15, 20, T].forEach(r => {
+      const y = yOf(r);
+      ctx.strokeStyle = '#191919';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(ML, y); ctx.lineTo(ML + CW, y); ctx.stroke();
+      ctx.fillStyle = '#333';
+      ctx.fillText('P' + r, ML - 4, y + 3);
+    });
+
+    // Date labels across top
+    ctx.textAlign = 'center';
+    for (let di = 0; di <= curDi; di++) {
+      ctx.fillStyle = di === curDi ? '#777' : '#2c2c2c';
+      ctx.fillText(dates[di].slice(5), xOf(di), MT - 9);
+    }
+
+    // Dashed vertical line at leading edge
+    ctx.strokeStyle = '#252525';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([2, 4]);
+    const leadX = curDi < N - 1 ? xOf(curDi) + (xOf(curDi + 1) - xOf(curDi)) * frac : xOf(curDi);
+    ctx.beginPath(); ctx.moveTo(leadX, MT); ctx.lineTo(leadX, MT + CH); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Lines per team
+    TEAMS.forEach((team, ti) => {
+      const color = TEAM_COLORS[ti % TEAM_COLORS.length];
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath();
+
+      // Draw complete segments
+      for (let di = 0; di <= curDi; di++) {
+        const x = xOf(di), y = yOf(ranks[di][ti]);
+        if (di === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          const px = xOf(di - 1), py = yOf(ranks[di - 1][ti]);
+          const cpx = (px + x) / 2;
+          ctx.bezierCurveTo(cpx, py, cpx, y, x, y);
+        }
+      }
+
+      // Partial animated segment toward next date
+      if (curDi < N - 1 && frac > 0) {
+        const x0 = xOf(curDi), y0 = yOf(ranks[curDi][ti]);
+        const x1 = xOf(curDi + 1), y1 = yOf(ranks[curDi + 1][ti]);
+        const ex = x0 + (x1 - x0) * frac;
+        // Cubic bezier Y at t=frac with horizontal control points
+        const cpx = (x0 + x1) / 2;
+        const mt = 1 - frac, t = frac;
+        const ey = mt*mt*mt*y0 + 3*mt*mt*t*y0 + 3*mt*t*t*y1 + t*t*t*y1;
+        const cpxP = (x0 + ex) / 2;
+        ctx.bezierCurveTo(cpxP, y0, cpxP, ey, ex, ey);
+      }
+
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Dot at current front position
+      const dotR0 = ranks[curDi][ti];
+      const dotR1 = curDi < N - 1 ? ranks[curDi + 1][ti] : dotR0;
+      const mt = 1 - frac, t = frac;
+      const dotY = (curDi < N - 1 && frac > 0)
+        ? mt*mt*mt*yOf(dotR0) + 3*mt*mt*t*yOf(dotR0) + 3*mt*t*t*yOf(dotR1) + t*t*t*yOf(dotR1)
+        : yOf(dotR0);
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(leadX, dotY, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Right-side labels sorted by current rank
+    const labDi = curDi;
+    const sorted = TEAMS.map((team, ti) => ({ team, ti, rank: ranks[labDi][ti] }))
+      .sort((a, b) => a.rank - b.rank);
+    ctx.font = '8px monospace';
+    ctx.textAlign = 'left';
+    sorted.forEach(({ team, ti, rank }) => {
+      ctx.fillStyle = TEAM_COLORS[ti % TEAM_COLORS.length];
+      const label = (rank <= 9 ? ' P' : 'P') + rank + ' ' + team.name.slice(0, 11);
+      ctx.fillText(label, ML + CW + 8, yOf(rank) + 3);
+    });
+
+    // Advance animation
+    if (progress < N - 1) {
+      progress = Math.min(N - 1, progress + SPEED);
+      _replayRaf = requestAnimationFrame(draw);
+    } else {
+      _replayRaf = null;
+    }
+  }
+
+  _replayRaf = requestAnimationFrame(draw);
 }
 
 function showToast(msg,isError=false){
