@@ -862,6 +862,10 @@ function renderRace() {
   });
   html += `</div>`;
 
+  const lwLeaderboard = getLoneWolfLeaderboard();
+  const topLwScore = lwLeaderboard[0]?.bestScore || 0;
+  const lwLeaders = topLwScore > 0 ? new Set(lwLeaderboard.filter(t=>t.bestScore===topLwScore).map(t=>t.name)) : new Set();
+
   sorted.forEach((team, rank) => {
     const frac = ptRange > 0 ? (team.pts - lastPts) / ptRange : (rank === 0 ? 1 : 0.5);
     const carLeft = Math.round(frac * USABLE);
@@ -870,6 +874,8 @@ function renderRace() {
     const driverBadges = getPickBadges(lastPick);
 
     const posCls = rank===0 ? 'p1' : rank===1 ? 'p2' : rank===2 ? 'p3' : '';
+    const nameColor = rank===0 ? 'var(--gold)' : rank===1 ? '#c0c0c0' : rank===2 ? '#cd7f32'
+                    : lwLeaders.has(team.name) ? '#c084fc' : 'var(--text)';
 
     // Lone wolf badge — show if this team has any lone wolf picks
     const lwPicks = getLoneWolfPicks(team.name);
@@ -884,9 +890,9 @@ function renderRace() {
       <div class="race-row-label">
         <div class="race-label-top">
           <span class="race-pos ${posCls}">P${rank+1}</span>
-          <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;">${team.name}</span>
+          <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;color:${nameColor};">${team.name}</span>
         </div>
-        <span class="race-score-inline" style="display:none;color:${rank<3?'var(--gold)':'var(--muted2)'};">${team.pts}${lwBest>0?' 🐺'+lwBest:' 🐑'}</span>
+        <span class="race-score-inline" style="display:none;color:${nameColor};">${team.pts}${lwBest>0?' 🐺'+lwBest:' 🐑'}</span>
       </div>
       <div class="race-row-track" style="width:${TRACK_W}px;min-width:${TRACK_W}px;">
         <div style="position:absolute;left:${USABLE*0.33}px;top:0;bottom:0;width:1px;background:#1e1e1e;"></div>
