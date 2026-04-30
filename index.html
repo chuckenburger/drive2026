@@ -745,15 +745,46 @@ function lightenHex(hex,amt){
   return `rgb(${Math.min(255,Math.floor(((n>>16)&255)+(255-((n>>16)&255))*amt))},${Math.min(255,Math.floor(((n>>8)&255)+(255-((n>>8)&255))*amt))},${Math.min(255,Math.floor((n&255)+(255-(n&255))*amt))})`;
 }
 
-function getDefaultSprite(color) {
+// Per-team nose color + optional racing stripe (cols 2-4 of body rows).
+// Custom Workshop sprites override these entirely.
+// Indexed same as TEAMS / TEAM_COLORS.
+const TEAM_VARIANTS = [
+  {nose:'#ffffff', stripe:null},       // 0  HenryJ          red body, white nose
+  {nose:'#111111', stripe:'#ffffff'},  // 1  Koonal           teal, black nose, white stripe
+  {nose:'#ffffff', stripe:'#111111'},  // 2  Zinger           orange, white nose, black stripe
+  {nose:'#ffd700', stripe:null},       // 3  Alex0911         blue, gold nose
+  {nose:'#ffd700', stripe:null},       // 4  Dopeboymagic23   dark teal, gold nose
+  {nose:'#ffd700', stripe:null},       // 5  Jfok             purple, gold nose
+  {nose:'#ff0000', stripe:null},       // 6  Titanic          bright blue, red nose
+  {nose:'#ffd700', stripe:'#ffffff'},  // 7  It's Klebering Time  dark red, gold nose, white stripe
+  {nose:'#ff0000', stripe:null},       // 8  Deevy            gray, red nose
+  {nose:'#0055ff', stripe:null},       // 9  Hotchuckolate    gray, blue nose
+  {nose:'#ffffff', stripe:'#111111'},  // 10 Paladizzle       green, white nose, black stripe
+  {nose:'#111111', stripe:null},       // 11 Diddy Got Giddey pink, black nose
+  {nose:'#111111', stripe:'#ff0000'},  // 12 GokulAgrawal     gold, black nose, red stripe
+  {nose:'#ffffff', stripe:null},       // 13 GayforJs         slate blue, white nose
+  {nose:'#9b59b6', stripe:null},       // 14 LakersFan22      orange-red, purple nose
+  {nose:'#ffd700', stripe:null},       // 15 Lmcclelland      sky blue, yellow nose
+  {nose:'#ff0000', stripe:null},       // 16 Shawnuberoi      green, red nose
+  {nose:'#ffd700', stripe:'#ffffff'},  // 17 NickelNdime      red, gold nose, white stripe
+  {nose:'#ff6600', stripe:null},       // 18 WolvesInThisBih  teal, orange nose
+  {nose:'#111111', stripe:'#ff0000'},  // 19 GoTheDistance    yellow-orange, black nose, red stripe
+  {nose:'#ffffff', stripe:'#ff0000'},  // 20 Jimbo17          steel blue, white nose, red stripe
+  {nose:'#111111', stripe:null},       // 21 Mdbrenyo         carrot orange, black nose
+  {nose:'#ffffff', stripe:'#ffd700'},  // 22 Rramchandani     dark red, white nose, gold stripe
+];
+
+function getDefaultSprite(color, noseColor, stripeColor) {
   const C=color, D=darkenHex(color,0.45), L=lightenHex(color,0.55);
+  const N=noseColor||D;
   const K='#111', V='#a8d8ff', W='#222', R='#888', X='#ff6600', _=null;
+  const b=(c,col)=>(stripeColor&&col>=2&&col<=4)?stripeColor:c;
   return [
     [_,_,_,W,_,_,_,_,_,_,_,W,_,_,_,_],
     [_,_,W,R,W,_,L,L,L,_,W,R,W,_,_,_],
     [_,_,_,W,_,L,C,C,C,C,_,W,_,_,_,_],
-    [D,D,C,C,C,K,K,K,C,C,C,C,C,D,X,_],
-    [D,D,C,C,C,K,V,K,C,C,C,C,C,D,X,_],
+    [N,N,b(C,2),b(C,3),b(C,4),K,K,K,C,C,C,C,C,D,X,_],
+    [N,N,b(C,2),b(C,3),b(C,4),K,V,K,C,C,C,C,C,D,X,_],
     [_,_,_,W,_,L,C,C,C,C,_,W,_,_,_,_],
     [_,_,W,R,W,_,L,L,L,_,W,R,W,_,_,_],
     [_,_,_,W,_,_,_,_,_,_,_,W,_,_,_,_],
@@ -761,7 +792,10 @@ function getDefaultSprite(color) {
 }
 
 function getSpriteForTeam(name, color) {
-  return customSprites[name] || getDefaultSprite(color);
+  if (customSprites[name]) return customSprites[name];
+  const idx = TEAMS.findIndex(t => t.name === name);
+  const v = TEAM_VARIANTS[idx] || {};
+  return getDefaultSprite(color, v.nose || null, v.stripe || null);
 }
 
 function drawSprite(ctx, px, py, pixels, ps) {
