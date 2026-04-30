@@ -396,9 +396,8 @@ nav {
 }
 .usage-bar { height: 100%; background: var(--gold); }
 
-.bar-chart { display: flex; flex-direction: column; gap: 8px; }
-.bar-row { display: flex; flex-direction: column; gap: 3px; }
-.bar-row-top { display: flex; align-items: center; gap: 8px; }
+.bar-chart { display: flex; flex-direction: column; gap: 5px; }
+.bar-row { display: flex; align-items: center; gap: 8px; }
 .bar-label {
   font-family: var(--mono);
   font-size: 9px;
@@ -415,29 +414,14 @@ nav {
   border-radius: 2px;
   overflow: hidden;
 }
-.bar-fill {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-left: 5px;
-  border-radius: 2px;
-  transition: width 0.5s ease;
-}
 .bar-val {
   font-family: var(--mono);
   font-size: 9px;
   font-weight: 700;
-  color: #000;
+  color: var(--text);
   white-space: nowrap;
-}
-.bar-picks {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--muted);
-  padding-left: 128px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: 28px;
+  text-align: right;
 }
 
 .team-chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1065,19 +1049,20 @@ function renderIntel() {
       <span title="Ice cold nights" style="margin-left:8px;">🥶 ${t.freeze}</span>
     </div>`).join('');
 
+  const STACK_PAL=['#f0c040','#60a5fa','#34d399','#f87171','#a78bfa','#fb923c','#38bdf8','#4ade80','#f472b6','#e879f9','#94a3b8','#fde68a'];
   const sorted=[...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
   const max=sorted[0].pts;
   document.getElementById('bar-chart').innerHTML = sorted.map((t,i)=>{
     const pct=(t.pts/max*100).toFixed(1);
-    const col=i<3?'var(--gold)':i<8?'var(--blue)':'var(--border2)';
     const teamPicks=[...getTeamPicks(t.name)].sort((a,b)=>(parseFloat(b.score)||0)-(parseFloat(a.score)||0));
-    const breakdown=teamPicks.map(p=>`${abbrevName(p.player)} ${p.score}`).join(' · ');
+    const segments=teamPicks.map((p,j)=>{
+      const s=parseFloat(p.score)||0;
+      return `<div style="flex:${s};height:100%;background:${STACK_PAL[j%STACK_PAL.length]};" title="${abbrevName(p.player)} · ${p.score} pts"></div>`;
+    }).join('');
     return `<div class="bar-row">
-      <div class="bar-row-top">
-        <div class="bar-label">${t.name}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"><span class="bar-val">${t.pts}</span></div></div>
-      </div>
-      ${breakdown?`<div class="bar-picks">${breakdown}</div>`:''}
+      <div class="bar-label">${t.name}</div>
+      <div class="bar-track"><div style="display:flex;height:100%;width:${pct}%;">${segments}</div></div>
+      <div class="bar-val">${t.pts}</div>
     </div>`;
   }).join('');
 }
