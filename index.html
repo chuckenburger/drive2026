@@ -466,6 +466,14 @@ nav {
 .wspin { display:none; align-items:center; gap:6px; font-family:var(--mono); font-size:10px; color:var(--muted); }
 .werr { width:100%; font-family:var(--mono); font-size:10px; color:var(--red); margin-top:3px; word-break:break-all; }
 
+/* ── TEAM DEEP DIVE ── */
+.deep-dive { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+@media(max-width:600px){ .deep-dive { grid-template-columns:1fr; } }
+.deep-dive-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px; }
+.deep-dive-title { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.deep-pick-row { display:flex; align-items:center; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--border); font-size:12px; gap:8px; }
+.deep-pick-row:last-child { border-bottom:none; }
+
 /* ── TOAST ── */
 .toast {
   position: fixed;
@@ -522,6 +530,13 @@ nav {
 
 <!-- USAGE MATRIX -->
 <div class="panel" id="panel-matrix">
+  <div id="team-focus" style="display:none;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div id="team-focus-name" style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);"></div>
+      <button class="btn btn-ghost" style="padding:4px 10px;font-size:10px;" onclick="clearDrill()">✕ All Teams</button>
+    </div>
+    <div id="team-focus-content" class="deep-dive"></div>
+  </div>
   <div class="matrix-wrap">
     <table class="matrix-table" id="matrix-table"></table>
   </div>
@@ -631,6 +646,7 @@ const TEAM_COLORS = [
 
 let picks = [];
 let customSprites = JSON.parse(localStorage.getItem('fp_sprites') || '{}');
+let focusedTeam = null;
 
 function saveSprites() { localStorage.setItem('fp_sprites', JSON.stringify(customSprites)); }
 
@@ -805,16 +821,17 @@ function renderRace() {
     const lwBest = lwPicks.length ? parseFloat(lwPicks[0].score)||0 : 0;
     const lwBadge = lwBest > 0
       ? `<span title="Best lone wolf: ${lwPicks[0].player} (${lwBest}pts on ${lwPicks[0].date})" style="font-family:var(--mono);font-size:9px;color:#888;cursor:default;">🐺${lwBest}</span>`
-      : '';
+      : `<span title="No lone wolf picks yet" style="font-size:12px;opacity:0.5;cursor:default;">🐑</span>`;
 
+    const escapedName = team.name.replace(/'/g,"\\'");
     html += `
     <div class="race-row" style="min-width:${180+TRACK_W+SCORE_W}px;">
       <div class="race-row-label">
         <div class="race-label-top">
           <span class="race-pos ${posCls}">P${rank+1}</span>
-          <span class="race-team-name" title="${team.name}">${team.name}</span>
+          <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;">${team.name}</span>
         </div>
-        <span class="race-score-inline" style="display:none;color:${rank<3?'var(--gold)':'var(--muted2)'};">${team.pts}${lwBest>0?' 🐺'+lwBest:''}</span>
+        <span class="race-score-inline" style="display:none;color:${rank<3?'var(--gold)':'var(--muted2)'};">${team.pts}${lwBest>0?' 🐺'+lwBest:' 🐑'}</span>
       </div>
       <div class="race-row-track" style="width:${TRACK_W}px;min-width:${TRACK_W}px;">
         <div style="position:absolute;left:${USABLE*0.33}px;top:0;bottom:0;width:1px;background:#1e1e1e;"></div>
@@ -847,6 +864,65 @@ function renderRace() {
 }
 
 // ============================================================
+// TEAM DRILL-DOWN
+// ============================================================
+function drillTeam(name) {
+  focusedTeam = name;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-matrix').classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{if(b.getAttribute('onclick')?.includes('matrix'))b.classList.add('active');});
+  renderFocusedView(name);
+  renderMatrix();
+}
+
+function clearDrill() {
+  focusedTeam = null;
+  document.getElementById('team-focus').style.display = 'none';
+  renderMatrix();
+}
+
+function renderFocusedView(name) {
+  document.getElementById('team-focus').style.display = 'block';
+  document.getElementById('team-focus-name').textContent = name;
+
+  const myPicks = getTeamPicks(name).sort((a,b)=>(parseFloat(b.score)||0)-(parseFloat(a.score)||0));
+  const myPlayers = new Set(myPicks.map(p=>p.player).filter(Boolean));
+
+  // Players used by the league that this team has NOT used, sorted by league usage count desc
+  const leagueUnused = getPlayerUsage().filter(u=>!myPlayers.has(u.player));
+
+  const leftHtml = myPicks.slice(0,10).map(p=>{
+    const score=parseFloat(p.score)||0;
+    const col=score>=40?'var(--gold)':score>=25?'#d97b3a':'var(--muted2)';
+    return `<div class="deep-pick-row">
+      <div><div style="font-weight:500;">${p.player||'—'}</div><div style="font-size:10px;color:var(--muted);">${p.date}</div></div>
+      <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:${col};">${p.score}</div>
+    </div>`;
+  }).join('') || '<div style="color:var(--muted);font-size:12px;">No picks yet</div>';
+
+  const rightHtml = leagueUnused.slice(0,10).map(u=>{
+    const teamsUsed=new Set(picks.filter(p=>p.player===u.player).map(p=>p.team)).size;
+    const pct=Math.round(teamsUsed/TEAMS.length*100);
+    const col=pct>=50?'var(--gold)':pct>=25?'#d97b3a':'var(--muted2)';
+    return `<div class="deep-pick-row">
+      <div><div style="font-weight:500;">${u.player}</div><div style="font-size:10px;color:var(--muted);">${teamsUsed}/${TEAMS.length} teams · avg ${u.avg.toFixed(1)}</div></div>
+      <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:${col};">${pct}%</div>
+    </div>`;
+  }).join('') || '<div style="color:var(--muted);font-size:12px;">No untried players</div>';
+
+  document.getElementById('team-focus-content').innerHTML = `
+    <div class="deep-dive-card">
+      <div class="deep-dive-title">Their Best Picks</div>
+      ${leftHtml}
+    </div>
+    <div class="deep-dive-card">
+      <div class="deep-dive-title">League Uses · They Haven't</div>
+      ${rightHtml}
+    </div>`;
+}
+
+// ============================================================
 // RENDER MATRIX
 // ============================================================
 function scoreClass(s) {
@@ -859,7 +935,8 @@ function renderMatrix() {
   const t = document.getElementById('matrix-table');
   if (!dates.length) { t.innerHTML='<tr><td style="color:var(--muted);padding:20px;font-family:var(--mono);font-size:11px;">No picks yet.</td></tr>'; return; }
 
-  const sorted = [...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
+  let allSorted = [...TEAMS].map(t=>({...t,pts:getEffectivePts(t.name)})).sort((a,b)=>b.pts-a.pts);
+  const sorted = focusedTeam ? allSorted.filter(t=>t.name===focusedTeam) : allSorted;
 
   let h = '<thead><tr><th class="team-col">Team</th>';
   dates.forEach(d=>{
