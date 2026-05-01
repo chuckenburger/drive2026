@@ -3,6 +3,31 @@
 
 const SEED_PICKS = [
 
+// 2026-04-30
+{"date": "2026-04-30", "team": "Koonal", "player": "Joel Embiid", "score": 37.0},
+{"date": "2026-04-30", "team": "Zinger in ya Stinker", "player": "Jalen Johnson", "score": 33.0},
+{"date": "2026-04-30", "team": "HenryJ", "player": "CJ McCollum", "score": 12.0},
+{"date": "2026-04-30", "team": "Alex0911", "player": "Jalen Johnson", "score": 33.0},
+{"date": "2026-04-30", "team": "Titanic", "player": "Joel Embiid", "score": 37.0},
+{"date": "2026-04-30", "team": "Hotchuckolate", "player": "Joel Embiid", "score": 37.0},
+{"date": "2026-04-30", "team": "Jfok", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "Deevy", "player": "Jalen Johnson", "score": 33.0},
+{"date": "2026-04-30", "team": "Diddy Got Giddey", "player": "Nikola Jokic", "score": 44.0},
+{"date": "2026-04-30", "team": "It's Klebering Time", "player": "Jalen Johnson", "score": 33.0},
+{"date": "2026-04-30", "team": "Dopeboymagic23", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "Shawnuberoi", "player": "Jalen Johnson", "score": 33.0},
+{"date": "2026-04-30", "team": "NickelNdime", "player": "Joel Embiid", "score": 37.0},
+{"date": "2026-04-30", "team": "Paladizzle", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "WolvesInThisBih", "player": "Nikola Jokic", "score": 44.0},
+{"date": "2026-04-30", "team": "Lmcclelland", "player": "Joel Embiid", "score": 37.0},
+{"date": "2026-04-30", "team": "GayforJs", "player": "Joel Embiid", "score": 37.0},
+{"date": "2026-04-30", "team": "GokulAgrawal", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "LakersFan22", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "GoTheDistance", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "Jimbo17", "player": "Julius Randle", "score": 24.0},
+{"date": "2026-04-30", "team": "Rramchandani", "player": "Tyrese Maxey", "score": 39.0},
+{"date": "2026-04-30", "team": "Mdbrenyo", "player": "VJ Edgecombe", "score": 27.0},
+
 // 2026-04-29
 {"date": "2026-04-29", "team": "HenryJ", "player": "Cade Cunningham", "score": 49.0},
 {"date": "2026-04-29", "team": "Koonal", "player": "Cade Cunningham", "score": 49.0},
