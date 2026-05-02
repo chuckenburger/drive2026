@@ -3,6 +3,32 @@
 
 const SEED_PICKS = [
 
+// 2026-05-01
+{"date": "2026-05-01", "team": "Koonal", "player": "Jalen Smith", "score": 24.0},
+{"date": "2026-05-01", "team": "Zinger in ya Stinker", "player": "Tobias Harris", "score": 32.0},
+{"date": "2026-05-01", "team": "HenryJ", "player": "RJ Barrett", "score": 32.0},
+{"date": "2026-05-01", "team": "Alex0911", "player": "Jalen Smith", "score": 24.0},
+{"date": "2026-05-01", "team": "Titanic", "player": "Tobias Harris", "score": 32.0},
+{"date": "2026-05-01", "team": "It's Klebering Time", "player": "Cade Cunningham", "score": 46.0},
+{"date": "2026-05-01", "team": "Deevy", "player": "RJ Barrett", "score": 32.0},
+{"date": "2026-05-01", "team": "Hotchuckolate", "player": "Donovan Mitchell", "score": 29.0},
+{"date": "2026-05-01", "team": "Jfok", "player": "Jalen Smith", "score": 24.0},
+{"date": "2026-05-01", "team": "Dopeboymagic23", "player": "Paolo Banchero", "score": 34.0},
+{"date": "2026-05-01", "team": "Lmcclelland", "player": "Scottie Barnes", "score": 49.0},
+{"date": "2026-05-01", "team": "Shawnuberoi", "player": "Amen Thompson", "score": 30.0},
+{"date": "2026-05-01", "team": "GokulAgrawal", "player": "Cade Cunningham", "score": 46.0},
+{"date": "2026-05-01", "team": "GoTheDistance", "player": "Scottie Barnes", "score": 49.0},
+{"date": "2026-05-01", "team": "NickelNdime", "player": "Amen Thompson", "score": 30.0},
+{"date": "2026-05-01", "team": "Diddy Got Giddey", "player": "Brandon Ingram", "score": 0.0},
+{"date": "2026-05-01", "team": "Paladizzle", "player": "RJ Barrett", "score": 32.0},
+{"date": "2026-05-01", "team": "LakersFan22", "player": "Cade Cunningham", "score": 46.0},
+{"date": "2026-05-01", "team": "GayforJs", "player": "RJ Barrett", "score": 32.0},
+{"date": "2026-05-01", "team": "WolvesInThisBih", "player": "Jarrett Allen", "score": 25.0},
+{"date": "2026-05-01", "team": "Jimbo17", "player": "RJ Barrett", "score": 32.0},
+{"date": "2026-05-01", "team": "Rramchandani", "player": "RJ Barrett", "score": 32.0},
+{"date": "2026-05-01", "team": "Mdbrenyo", "player": "RJ Barrett", "score": 32.0},
+
+
 // 2026-04-30
 {"date": "2026-04-30", "team": "Koonal", "player": "Joel Embiid", "score": 37.0},
 {"date": "2026-04-30", "team": "Zinger in ya Stinker", "player": "Jalen Johnson", "score": 33.0},
