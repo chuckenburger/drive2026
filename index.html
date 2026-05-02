@@ -882,6 +882,11 @@ function renderRace() {
   const sorted = [...TEAMS].map((t,i)=>({...t,idx:i,pts:getEffectivePts(t.name)}))
     .sort((a,b)=>b.pts-a.pts);
 
+  // Assign standard competition ranks (ties share a rank, next rank is skipped)
+  sorted.forEach((team, i) => {
+    team.rank = i > 0 && team.pts === sorted[i-1].pts ? sorted[i-1].rank : i + 1;
+  });
+
   const leaderPts = sorted[0].pts;
   const lastPts   = sorted[sorted.length-1].pts;
   const ptRange   = leaderPts - lastPts || 1;
@@ -907,15 +912,16 @@ function renderRace() {
   const topLwScore = lwLeaderboard[0]?.bestScore || 0;
   const lwLeaders = topLwScore > 0 ? new Set(lwLeaderboard.filter(t=>t.bestScore===topLwScore).map(t=>t.name)) : new Set();
 
-  sorted.forEach((team, rank) => {
-    const frac = ptRange > 0 ? (team.pts - lastPts) / ptRange : (rank === 0 ? 1 : 0.5);
+  sorted.forEach((team, i) => {
+    const rank = team.rank;
+    const frac = ptRange > 0 ? (team.pts - lastPts) / ptRange : (i === 0 ? 1 : 0.5);
     const carLeft = Math.round(frac * USABLE);
     const lastPick = getTeamPicks(team.name)[0];
     const driver = abbrevName(lastPick?.player);
     const driverBadges = getPickBadges(lastPick);
 
-    const posCls = rank===0 ? 'p1' : rank===1 ? 'p2' : rank===2 ? 'p3' : '';
-    const nameColor = rank===0 ? 'var(--gold)' : rank===1 ? '#c0c0c0' : rank===2 ? '#cd7f32'
+    const posCls = rank===1 ? 'p1' : rank===2 ? 'p2' : rank===3 ? 'p3' : '';
+    const nameColor = rank===1 ? 'var(--gold)' : rank===2 ? '#c0c0c0' : rank===3 ? '#cd7f32'
                     : lwLeaders.has(team.name) ? '#c084fc' : 'var(--text)';
 
     // Lone wolf badge — show if this team has any lone wolf picks
@@ -930,7 +936,7 @@ function renderRace() {
     <div class="race-row" style="min-width:${180+TRACK_W+SCORE_W}px;">
       <div class="race-row-label">
         <div class="race-label-top">
-          <span class="race-pos ${posCls}">P${rank+1}</span>
+          <span class="race-pos ${posCls}">P${rank}</span>
           <span class="race-team-name" title="${team.name}" onclick="drillTeam('${escapedName}')" style="cursor:pointer;color:${nameColor};">${team.name}${lwLeaders.has(team.name) ? ' 🐺' : ''}</span>
         </div>
         <span class="race-score-inline" style="display:none;color:${nameColor};">${team.pts}${lwBest>0?' 🐺'+lwBest:' 🐑'}</span>
@@ -943,7 +949,7 @@ function renderRace() {
           <span class="car-driver">${driver}${driverBadges?' '+driverBadges:''}</span>
         </div>
       </div>
-      <div class="race-score-col" style="color:${rank<3?'var(--gold)':'var(--muted2)'};">
+      <div class="race-score-col" style="color:${rank<=3?'var(--gold)':'var(--muted2)'};">
         ${team.pts} ${lwBadge}
       </div>
     </div>`;
