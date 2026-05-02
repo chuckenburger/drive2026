@@ -1230,6 +1230,7 @@ function showTab(name, btn) {
 // REPLAY — animated bump chart
 // ============================================================
 let _replayRaf = null;
+let _replaySelected = null; // team index, persists across restarts
 
 function replayRestart() {
   if (_replayRaf) { cancelAnimationFrame(_replayRaf); _replayRaf = null; }
@@ -1288,11 +1289,12 @@ function renderReplay() {
   const SPEED = 0.028; // dates revealed per frame (~590ms per date at 60fps)
   const carImgs = TEAMS.map((_, ti) => makeCarImage(ti));
 
-  function draw() {
+  function drawFrame() {
     ctx.clearRect(0, 0, W, H);
 
     const curDi = Math.min(Math.floor(progress), N - 1);
     const frac = progress - Math.floor(progress);
+    const sel = _replaySelected;
 
     // Subtle horizontal grid + P labels
     ctx.font = '8px monospace';
@@ -1321,75 +1323,108 @@ function renderReplay() {
     ctx.beginPath(); ctx.moveTo(leadX, MT); ctx.lineTo(leadX, MT + CH); ctx.stroke();
     ctx.setLineDash([]);
 
-    // Lines per team
-    TEAMS.forEach((team, ti) => {
-      const color = TEAM_COLORS[ti % TEAM_COLORS.length];
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 1.5;
-      ctx.globalAlpha = 0.85;
-      ctx.beginPath();
+    // Lines per team — unselected pass first (drawn underneath), then selected on top
+    [false, true].forEach(drawSelected => {
+      TEAMS.forEach((team, ti) => {
+        const isHighlighted = sel === null || sel === ti;
+        if (drawSelected !== (sel !== null && sel === ti)) return;
 
-      // Draw complete segments
-      for (let di = 0; di <= curDi; di++) {
-        const x = xOf(di), y = yOf(ranks[di][ti]);
-        if (di === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          const px = xOf(di - 1), py = yOf(ranks[di - 1][ti]);
-          const cpx = (px + x) / 2;
-          ctx.bezierCurveTo(cpx, py, cpx, y, x, y);
+        const color = TEAM_COLORS[ti % TEAM_COLORS.length];
+        ctx.strokeStyle = color;
+        ctx.lineWidth = sel !== null && sel === ti ? 2.5 : 1.5;
+        ctx.globalAlpha = sel === null ? 0.85 : (isHighlighted ? 1.0 : 0.1);
+        ctx.beginPath();
+
+        for (let di = 0; di <= curDi; di++) {
+          const x = xOf(di), y = yOf(ranks[di][ti]);
+          if (di === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            const px = xOf(di - 1), py = yOf(ranks[di - 1][ti]);
+            const cpx = (px + x) / 2;
+            ctx.bezierCurveTo(cpx, py, cpx, y, x, y);
+          }
         }
-      }
 
-      // Partial animated segment toward next date
-      if (curDi < N - 1 && frac > 0) {
-        const x0 = xOf(curDi), y0 = yOf(ranks[curDi][ti]);
-        const x1 = xOf(curDi + 1), y1 = yOf(ranks[curDi + 1][ti]);
-        const ex = x0 + (x1 - x0) * frac;
-        // Cubic bezier Y at t=frac with horizontal control points
-        const cpx = (x0 + x1) / 2;
+        if (curDi < N - 1 && frac > 0) {
+          const x0 = xOf(curDi), y0 = yOf(ranks[curDi][ti]);
+          const x1 = xOf(curDi + 1), y1 = yOf(ranks[curDi + 1][ti]);
+          const ex = x0 + (x1 - x0) * frac;
+          const cpx = (x0 + x1) / 2;
+          const mt = 1 - frac, t = frac;
+          const ey = mt*mt*mt*y0 + 3*mt*mt*t*y0 + 3*mt*t*t*y1 + t*t*t*y1;
+          const cpxP = (x0 + ex) / 2;
+          ctx.bezierCurveTo(cpxP, y0, cpxP, ey, ex, ey);
+        }
+
+        ctx.stroke();
+
+        // Car sprite
+        const dotR0 = ranks[curDi][ti];
+        const dotR1 = curDi < N - 1 ? ranks[curDi + 1][ti] : dotR0;
         const mt = 1 - frac, t = frac;
-        const ey = mt*mt*mt*y0 + 3*mt*mt*t*y0 + 3*mt*t*t*y1 + t*t*t*y1;
-        const cpxP = (x0 + ex) / 2;
-        ctx.bezierCurveTo(cpxP, y0, cpxP, ey, ex, ey);
-      }
-
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-
-      // Car sprite at current front position
-      const dotR0 = ranks[curDi][ti];
-      const dotR1 = curDi < N - 1 ? ranks[curDi + 1][ti] : dotR0;
-      const mt = 1 - frac, t = frac;
-      const dotY = (curDi < N - 1 && frac > 0)
-        ? mt*mt*mt*yOf(dotR0) + 3*mt*mt*t*yOf(dotR0) + 3*mt*t*t*yOf(dotR1) + t*t*t*yOf(dotR1)
-        : yOf(dotR0);
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(carImgs[ti], leadX - 12, dotY - 6, 24, 12);
+        const dotY = (curDi < N - 1 && frac > 0)
+          ? mt*mt*mt*yOf(dotR0) + 3*mt*mt*t*yOf(dotR0) + 3*mt*t*t*yOf(dotR1) + t*t*t*yOf(dotR1)
+          : yOf(dotR0);
+        ctx.globalAlpha = sel === null ? 1.0 : (isHighlighted ? 1.0 : 0.1);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(carImgs[ti], leadX - 12, dotY - 6, 24, 12);
+        ctx.globalAlpha = 1;
+      });
     });
 
     // Right-side labels sorted by current rank
-    const labDi = curDi;
-    const sorted = TEAMS.map((team, ti) => ({ team, ti, rank: ranks[labDi][ti] }))
+    const labSorted = TEAMS.map((team, ti) => ({ team, ti, rank: ranks[curDi][ti] }))
       .sort((a, b) => a.rank - b.rank);
     ctx.font = '8px monospace';
     ctx.textAlign = 'left';
-    sorted.forEach(({ team, ti, rank }) => {
+    labSorted.forEach(({ team, ti, rank }) => {
+      ctx.globalAlpha = sel === null ? 1.0 : (sel === ti ? 1.0 : 0.2);
       ctx.fillStyle = TEAM_COLORS[ti % TEAM_COLORS.length];
       const label = (rank <= 9 ? ' P' : 'P') + rank + ' ' + team.name.slice(0, 11);
       ctx.fillText(label, ML + CW + 20, yOf(rank) + 3);
     });
+    ctx.globalAlpha = 1;
+  }
 
-    // Advance animation
+  // Click to select/deselect a team
+  canvas.onclick = function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.clientX - rect.left) * (W / rect.width);
+    const cy = (e.clientY - rect.top) * (H / rect.height);
+    const curDi = Math.min(Math.floor(progress), N - 1);
+
+    // Find nearest revealed date column to click X
+    let nearDi = 0;
+    for (let di = 1; di <= curDi; di++) {
+      if (Math.abs(xOf(di) - cx) < Math.abs(xOf(nearDi) - cx)) nearDi = di;
+    }
+    if (cx > ML + CW) nearDi = curDi; // label area: use latest date
+
+    // Find team with Y closest to click Y
+    let closest = null, minDist = Infinity;
+    TEAMS.forEach((_, ti) => {
+      const d = Math.abs(yOf(ranks[nearDi][ti]) - cy);
+      if (d < minDist) { minDist = d; closest = ti; }
+    });
+
+    if (minDist < 18) {
+      _replaySelected = (_replaySelected === closest) ? null : closest;
+      if (!_replayRaf) drawFrame();
+    }
+  };
+
+  function animStep() {
+    drawFrame();
     if (progress < N - 1) {
       progress = Math.min(N - 1, progress + SPEED);
-      _replayRaf = requestAnimationFrame(draw);
+      _replayRaf = requestAnimationFrame(animStep);
     } else {
       _replayRaf = null;
     }
   }
 
-  _replayRaf = requestAnimationFrame(draw);
+  _replayRaf = requestAnimationFrame(animStep);
 }
 
 function showToast(msg,isError=false){
