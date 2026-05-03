@@ -3,6 +3,32 @@
 
 const SEED_PICKS = [
 
+// 2026-05-02
+{"date": "2026-05-02", "team": "Koonal", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Zinger in ya Stinker", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "HenryJ", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Alex0911", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Titanic", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "It's Klebering Time", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Jfok", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Dopeboymagic23", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Shawnuberoi", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Hotchuckolate", "player": "P. Pritchard", "score": 26.0},
+{"date": "2026-05-02", "team": "Diddy Got Giddey", "player": "Joel Embiid", "score": 52.0},
+{"date": "2026-05-02", "team": "GokulAgrawal", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "GoTheDistance", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Deevy", "player": "Paul George", "score": 14.0},
+{"date": "2026-05-02", "team": "LakersFan22", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Paladizzle", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "GayforJs", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "Lmcclelland", "player": "Paul George", "score": 14.0},
+{"date": "2026-05-02", "team": "Jimbo17", "player": "Jaylen Brown", "score": 46.0},
+{"date": "2026-05-02", "team": "NickelNdime", "player": "Paul George", "score": 14.0},
+{"date": "2026-05-02", "team": "WolvesInThisBih", "player": "Paul George", "score": 14.0},
+{"date": "2026-05-02", "team": "Mdbrenyo", "player": "Joel Embiid", "score": 52.0},
+{"date": "2026-05-02", "team": "Rramchandani", "player": "Paul George", "score": 14.0},
+
+
 // 2026-05-01
 {"date": "2026-05-01", "team": "Koonal", "player": "Jalen Smith", "score": 24.0},
 {"date": "2026-05-01", "team": "Zinger in ya Stinker", "player": "Tobias Harris", "score": 32.0},
