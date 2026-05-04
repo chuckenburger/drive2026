@@ -3,6 +3,32 @@
 
 const SEED_PICKS = [
 
+// 2026-05-03
+{"date": "2026-05-03", "team": "Zinger in ya Stinker", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "Koonal", "player": "Donovan Mitchell", "score": 24.0},
+{"date": "2026-05-03", "team": "Alex0911", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "HenryJ", "player": "Desmond Bane", "score": 25.0},
+{"date": "2026-05-03", "team": "Titanic", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "It's Klebering Time", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "Jfok", "player": "Tobias Harris", "score": 44.0},
+{"date": "2026-05-03", "team": "GoTheDistance", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "Paladizzle", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "Dopeboymagic23", "player": "James Harden", "score": 28.0},
+{"date": "2026-05-03", "team": "Deevy", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "LakersFan22", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "GayforJs", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "Hotchuckolate", "player": "James Harden", "score": 28.0},
+{"date": "2026-05-03", "team": "Diddy Got Giddey", "player": "RJ Barrett", "score": 33.0},
+{"date": "2026-05-03", "team": "GokulAgrawal", "player": "RJ Barrett", "score": 33.0},
+{"date": "2026-05-03", "team": "Shawnuberoi", "player": "Evan Mobley", "score": 21.0},
+{"date": "2026-05-03", "team": "Lmcclelland", "player": "Cade Cunningham", "score": 43.0},
+{"date": "2026-05-03", "team": "Jimbo17", "player": "Paolo Banchero", "score": 49.0},
+{"date": "2026-05-03", "team": "WolvesInThisBih", "player": "Cade Cunningham", "score": 43.0},
+{"date": "2026-05-03", "team": "NickelNdime", "player": "Desmond Bane", "score": 25.0},
+{"date": "2026-05-03", "team": "Mdbrenyo", "player": "Jalen Suggs", "score": 17.0},
+{"date": "2026-05-03", "team": "Rramchandani", "player": "Desmond Bane", "score": 25.0},
+
+
 // 2026-05-02
 {"date": "2026-05-02", "team": "Koonal", "player": "Jaylen Brown", "score": 46.0},
 {"date": "2026-05-02", "team": "Zinger in ya Stinker", "player": "Jaylen Brown", "score": 46.0},
