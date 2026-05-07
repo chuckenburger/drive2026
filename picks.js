@@ -3,6 +3,32 @@
 
 const SEED_PICKS = [
 
+// 2026-05-06
+{"date": "2026-05-06", "team": "Koonal", "player": "Karl-Anthony Towns", "score": 35.0},
+{"date": "2026-05-06", "team": "Zinger in ya Stinker", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-06", "team": "Titanic", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "Alex0911", "player": "Jaden McDaniels", "score": 18.0},
+{"date": "2026-05-06", "team": "HenryJ", "player": "De'Aaron Fox", "score": 19.0},
+{"date": "2026-05-06", "team": "It's Klebering Time", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "Dopeboymagic23", "player": "Victor Wembanyama", "score": 37.0},
+{"date": "2026-05-06", "team": "Paladizzle", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "Jfok", "player": "Jaden McDaniels", "score": 18.0},
+{"date": "2026-05-06", "team": "GoTheDistance", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "Shawnuberoi", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "LakersFan22", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "Hotchuckolate", "player": "De'Aaron Fox", "score": 19.0},
+{"date": "2026-05-06", "team": "Deevy", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-06", "team": "GokulAgrawal", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-06", "team": "Diddy Got Giddey", "player": "Ayo Dosunmu", "score": 2.0},
+{"date": "2026-05-06", "team": "GayforJs", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-06", "team": "WolvesInThisBih", "player": "Darius Vassell", "score": 19.0},
+{"date": "2026-05-06", "team": "Lmcclelland", "player": "Jaden McDaniels", "score": 18.0},
+{"date": "2026-05-06", "team": "Jimbo17", "player": "De'Aaron Fox", "score": 19.0},
+{"date": "2026-05-06", "team": "Mdbrenyo", "player": "Paul George", "score": 31.0},
+{"date": "2026-05-06", "team": "NickelNdime", "player": "Rudy Gobert", "score": 12.0},
+{"date": "2026-05-06", "team": "Rramchandani", "player": "Julius Randle", "score": 17.0},
+
+
 // 2026-05-05
 {"date": "2026-05-05", "team": "Zinger in ya Stinker", "player": "Austin Reaves", "score": 16.0},
 {"date": "2026-05-05", "team": "Alex0911", "player": "LeBron James", "score": 36.0},
