@@ -3,6 +3,33 @@
 
 const SEED_PICKS = [
 
+// 2026-05-07
+{"date": "2026-05-07", "team": "Alex0911", "player": "Donovan Mitchell", "score": 40.0},
+{"date": "2026-05-07", "team": "Koonal", "player": "Evan Mobley", "score": 18.0},
+{"date": "2026-05-07", "team": "HenryJ", "player": "Austin Reaves", "score": 34.0},
+{"date": "2026-05-07", "team": "Zinger in ya Stinker", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "It's Klebering Time", "player": "LeBron James", "score": 31.0},
+{"date": "2026-05-07", "team": "Titanic", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "Jfok", "player": "LeBron James", "score": 31.0},
+{"date": "2026-05-07", "team": "Dopeboymagic23", "player": "Evan Mobley", "score": 18.0},
+{"date": "2026-05-07", "team": "Paladizzle", "player": "Deandre Ayton", "score": 11.0},
+{"date": "2026-05-07", "team": "LakersFan22", "player": "Marcus Smart", "score": 21.0},
+{"date": "2026-05-07", "team": "Shawnuberoi", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "GoTheDistance", "player": "Deandre Ayton", "score": 11.0},
+{"date": "2026-05-07", "team": "Hotchuckolate", "player": "Marcus Smart", "score": 21.0},
+{"date": "2026-05-07", "team": "Deevy", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "GokulAgrawal", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "Diddy Got Giddey", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "GayforJs", "player": "Deandre Ayton", "score": 11.0},
+{"date": "2026-05-07", "team": "Lmcclelland", "player": "Austin Reaves", "score": 34.0},
+{"date": "2026-05-07", "team": "Jimbo17", "player": "LeBron James", "score": 31.0},
+{"date": "2026-05-07", "team": "WolvesInThisBih", "player": "Rui Hachimura", "score": 21.0},
+{"date": "2026-05-07", "team": "Mdbrenyo", "player": "LeBron James", "score": 31.0},
+{"date": "2026-05-07", "team": "NickelNdime", "player": "James Harden", "score": 16.0},
+{"date": "2026-05-07", "team": "Rramchandani", "player": "Donovan Mitchell", "score": 40.0},
+
+
+
 // 2026-05-06
 {"date": "2026-05-06", "team": "Koonal", "player": "Karl-Anthony Towns", "score": 35.0},
 {"date": "2026-05-06", "team": "Zinger in ya Stinker", "player": "VJ Edgecombe", "score": 22.0},
