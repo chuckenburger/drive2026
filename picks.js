@@ -2,6 +2,32 @@
 // Format: {"date": "YYYY-MM-DD", "team": "TeamName", "player": "Full Name", "score": 0.0}
 
 const SEED_PICKS = [
+    
+// 2026-05-08
+{"date": "2026-05-08", "team": "Alex0911", "player": "Paul George", "score": 22.0},
+{"date": "2026-05-08", "team": "Koonal", "player": "Paul George", "score": 22.0},
+{"date": "2026-05-08", "team": "HenryJ", "player": "Paul George", "score": 22.0},
+{"date": "2026-05-08", "team": "Zinger in ya Stinker", "player": "Paul George", "score": 22.0},
+{"date": "2026-05-08", "team": "It's Klebering Time", "player": "Julius Randle", "score": 17.0},
+{"date": "2026-05-08", "team": "Titanic", "player": "Julius Randle", "score": 17.0},
+{"date": "2026-05-08", "team": "Jfok", "player": "Karl-Anthony Towns", "score": 27.0},
+{"date": "2026-05-08", "team": "Dopeboymagic23", "player": "Paul George", "score": 22.0},
+{"date": "2026-05-08", "team": "Paladizzle", "player": "Naz Reid", "score": 34.0},
+{"date": "2026-05-08", "team": "Diddy Got Giddey", "player": "Anthony Edwards", "score": 51.0},
+{"date": "2026-05-08", "team": "LakersFan22", "player": "Rudy Gobert", "score": 24.0},
+{"date": "2026-05-08", "team": "GoTheDistance", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-08", "team": "Hotchuckolate", "player": "Paul George", "score": 22.0},
+{"date": "2026-05-08", "team": "Deevy", "player": "Jaden McDaniels", "score": 27.0},
+{"date": "2026-05-08", "team": "Shawnuberoi", "player": "Julius Randle", "score": 17.0},
+{"date": "2026-05-08", "team": "GokulAgrawal", "player": "Stephon Castle", "score": 25.0},
+{"date": "2026-05-08", "team": "GayforJs", "player": "Julius Randle", "score": 17.0},
+{"date": "2026-05-08", "team": "Lmcclelland", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-08", "team": "Jimbo17", "player": "Stephon Castle", "score": 25.0},
+{"date": "2026-05-08", "team": "WolvesInThisBih", "player": "De'Aaron Fox", "score": 24.0},
+{"date": "2026-05-08", "team": "NickelNdime", "player": "Jalen Brunson", "score": 44.0},
+{"date": "2026-05-08", "team": "Mdbrenyo", "player": "Julius Randle", "score": 17.0},
+{"date": "2026-05-08", "team": "Rramchandani", "player": "Stephon Castle", "score": 25.0},
+
 
 // 2026-05-07
 {"date": "2026-05-07", "team": "Alex0911", "player": "Donovan Mitchell", "score": 40.0},
