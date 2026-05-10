@@ -2,7 +2,33 @@
 // Format: {"date": "YYYY-MM-DD", "team": "TeamName", "player": "Full Name", "score": 0.0}
 
 const SEED_PICKS = [
-    
+
+// 2026-05-09
+{"date": "2026-05-09", "team": "Zinger in ya Stinker", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "Alex0911", "player": "James Harden", "score": 26.0},
+{"date": "2026-05-09", "team": "Koonal", "player": "LeBron James", "score": 31.0},
+{"date": "2026-05-09", "team": "HenryJ", "player": "James Harden", "score": 26.0},
+{"date": "2026-05-09", "team": "Jfok", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "It's Klebering Time", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "Titanic", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "Diddy Got Giddey", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "Dopeboymagic23", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "LakersFan22", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "Paladizzle", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "Deevy", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "Shawnuberoi", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "GoTheDistance", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "Hotchuckolate", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "GokulAgrawal", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "GayforJs", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "WolvesInThisBih", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "NickelNdime", "player": "Donovan Mitchell", "score": 46.0},
+{"date": "2026-05-09", "team": "Jimbo17", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "Lmcclelland", "player": "", "score": 0.0},
+{"date": "2026-05-09", "team": "Mdbrenyo", "player": "Austin Reaves", "score": 24.0},
+{"date": "2026-05-09", "team": "Rramchandani", "player": "", "score": 0.0},
+
+
 // 2026-05-08
 {"date": "2026-05-08", "team": "Alex0911", "player": "Paul George", "score": 22.0},
 {"date": "2026-05-08", "team": "Koonal", "player": "Paul George", "score": 22.0},
