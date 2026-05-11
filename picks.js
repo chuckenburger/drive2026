@@ -3,6 +3,33 @@
 
 const SEED_PICKS = [
 
+// 2026-05-10
+{"date": "2026-05-10", "team": "Zinger in ya Stinker", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Alex0911", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-10", "team": "Koonal", "player": "Jaden McDaniels", "score": 19.0},
+{"date": "2026-05-10", "team": "HenryJ", "player": "Jaden McDaniels", "score": 19.0},
+{"date": "2026-05-10", "team": "Jfok", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-10", "team": "Titanic", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-10", "team": "It's Klebering Time", "player": "Jaden McDaniels", "score": 19.0},
+{"date": "2026-05-10", "team": "Dopeboymagic23", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "LakersFan22", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Deevy", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Diddy Got Giddey", "player": "Julius Randle", "score": 17.0},
+{"date": "2026-05-10", "team": "Paladizzle", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-10", "team": "Shawnuberoi", "player": "VJ Edgecombe", "score": 22.0},
+{"date": "2026-05-10", "team": "GokulAgrawal", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "GayforJs", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Hotchuckolate", "player": "Ayo Dosunmu", "score": 18.0},
+{"date": "2026-05-10", "team": "GoTheDistance", "player": "Kelly Oubre", "score": 14.0},
+{"date": "2026-05-10", "team": "NickelNdime", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Jimbo17", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "WolvesInThisBih", "player": "Victor Wembanyama", "score": 7.0},
+{"date": "2026-05-10", "team": "Mdbrenyo", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Lmcclelland", "player": "Anthony Edwards", "score": 41.0},
+{"date": "2026-05-10", "team": "Rramchandani", "player": "Anthony Edwards", "score": 41.0},
+
+
+
 // 2026-05-09
 {"date": "2026-05-09", "team": "Zinger in ya Stinker", "player": "Donovan Mitchell", "score": 46.0},
 {"date": "2026-05-09", "team": "Alex0911", "player": "James Harden", "score": 26.0},
