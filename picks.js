@@ -2,6 +2,32 @@
 // Format: {"date": "YYYY-MM-DD", "team": "TeamName", "player": "Full Name", "score": 0.0}
 
 const SEED_PICKS = [
+    
+// 2026-05-12
+{"date": "2026-05-12", "team": "Zinger in ya Stinker", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "Koonal", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "LakersFan22", "player": "Victor Wembanyama", "score": 48.0},
+{"date": "2026-05-12", "team": "HenryJ", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "Alex0911", "player": "", "score": 0.0},
+{"date": "2026-05-12", "team": "Jfok", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "Titanic", "player": "Darius Vassell", "score": 17.0},
+{"date": "2026-05-12", "team": "It's Klebering Time", "player": "Anthony Edwards", "score": 20.0},
+{"date": "2026-05-12", "team": "Paladizzle", "player": "Rudy Gobert", "score": 11.0},
+{"date": "2026-05-12", "team": "Deevy", "player": "Rudy Gobert", "score": 11.0},
+{"date": "2026-05-12", "team": "Diddy Got Giddey", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "Dopeboymagic23", "player": "Jaden McDaniels", "score": 24.0},
+{"date": "2026-05-12", "team": "Shawnuberoi", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "GayforJs", "player": "Jaden McDaniels", "score": 24.0},
+{"date": "2026-05-12", "team": "GokulAgrawal", "player": "Darius Vassell", "score": 17.0},
+{"date": "2026-05-12", "team": "NickelNdime", "player": "Ayo Dosunmu", "score": 32.0},
+{"date": "2026-05-12", "team": "Hotchuckolate", "player": "Stephon Castle", "score": 26.0},
+{"date": "2026-05-12", "team": "Jimbo17", "player": "Jaden McDaniels", "score": 24.0},
+{"date": "2026-05-12", "team": "GoTheDistance", "player": "Anthony Edwards", "score": 20.0},
+{"date": "2026-05-12", "team": "WolvesInThisBih", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "Mdbrenyo", "player": "Ayo Dosunmu", "score": 32.0},
+{"date": "2026-05-12", "team": "Lmcclelland", "player": "Naz Reid", "score": 20.0},
+{"date": "2026-05-12", "team": "Rramchandani", "player": "", "score": 0.0},
+
 
 // 2026-05-11
 {"date": "2026-05-11", "team": "Zinger in ya Stinker", "player": "Evan Mobley", "score": 35.0},
